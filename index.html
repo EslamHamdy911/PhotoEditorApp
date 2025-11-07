@@ -29,7 +29,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
@@ -101,7 +101,7 @@
         .image-display {
             width: 100%;
             max-width: 1200px;
-            height: 700px;
+            height: 600px;
             margin: 0 auto 40px;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             border-radius: 15px;
@@ -148,11 +148,26 @@
         }
 
         .section-title {
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 28px;
+            font-weight: 700;
             color: #2d3748;
             margin-bottom: 20px;
             text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .category-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #4a5568;
+            margin: 30px 0 15px 0;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            border-right: 4px solid #667eea;
         }
 
         .tools-grid {
@@ -197,9 +212,187 @@
             pointer-events: none;
         }
 
+        .tool-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
         .tool-icon {
             font-size: 32px;
             filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        /* Control Panel */
+        .control-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,1) 100%);
+            padding: 30px;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+            z-index: 2000;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            max-height: 80%;
+            overflow-y: auto;
+        }
+
+        .control-panel.active {
+            transform: translateY(0);
+        }
+
+        .control-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .control-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .close-control {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+        }
+
+        .close-control:hover {
+            transform: rotate(90deg) scale(1.1);
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+        }
+
+        .control-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .slider-container {
+            margin-bottom: 25px;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .slider-value {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 10px;
+            background: linear-gradient(to right, #e2e8f0 0%, #cbd5e0 100%);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .slider::-moz-range-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .control-btn {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn-reset:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(240, 147, 251, 0.4);
+        }
+
+        .btn-apply {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+        }
+
+        .btn-apply:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(67, 233, 123, 0.4);
         }
 
         /* Action Buttons */
@@ -240,23 +433,18 @@
             pointer-events: none;
         }
 
-        .btn-undo {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-        }
-
-        .btn-redo {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-        }
-
         .btn-save {
             background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
             color: white;
         }
 
+        .btn-reset-all {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
         .btn-share {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
 
@@ -275,13 +463,18 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             opacity: 0;
             transition: all 0.4s ease;
-            z-index: 1000;
+            z-index: 3000;
             backdrop-filter: blur(10px);
         }
 
         .toast.show {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
+        }
+
+        /* Canvas for advanced effects */
+        .canvas-container {
+            display: none;
         }
 
         /* Responsive Design */
@@ -315,6 +508,14 @@
 
             .tool-icon {
                 font-size: 28px;
+            }
+
+            .control-panel {
+                padding: 20px;
+            }
+
+            .control-title {
+                font-size: 20px;
             }
 
             .action-buttons {
@@ -370,43 +571,75 @@
        لم يتم اختيار صورة بعد
       </div>
      </div>
+    </div><!-- Canvas for advanced effects -->
+    <div class="canvas-container">
+     <canvas id="effectCanvas"></canvas>
     </div><!-- Tools Section -->
     <section class="tools-section">
-     <h2 class="section-title">أدوات التحرير</h2>
-     <div class="tools-grid"><button class="tool-button disabled" data-tool="resize"> <span class="tool-icon">📏</span> <span id="resizeText">تغيير الحجم</span> </button> <button class="tool-button disabled" data-tool="rotate"> <span class="tool-icon">🔄</span> <span id="rotateText">تدوير</span> </button> <button class="tool-button disabled" data-tool="crop"> <span class="tool-icon">✂️</span> <span id="cropText">قص</span> </button> <button class="tool-button disabled" data-tool="flip"> <span class="tool-icon">↔️</span> <span>قلب أفقي</span> </button> <button class="tool-button disabled" data-tool="flipv"> <span class="tool-icon">↕️</span> <span>قلب عمودي</span> </button> <button class="tool-button disabled" data-tool="brightness"> <span class="tool-icon">☀️</span> <span id="brightnessText">السطوع</span> </button> <button class="tool-button disabled" data-tool="contrast"> <span class="tool-icon">◐</span> <span id="contrastText">التباين</span> </button> <button class="tool-button disabled" data-tool="saturation"> <span class="tool-icon">🌈</span> <span id="saturationText">التشبع</span> </button> <button class="tool-button disabled" data-tool="hue"> <span class="tool-icon">🎨</span> <span>تدوير اللون</span> </button> <button class="tool-button disabled" data-tool="temperature"> <span class="tool-icon">🌡️</span> <span>درجة الحرارة</span> </button> <button class="tool-button disabled" data-tool="tint"> <span class="tool-icon">💧</span> <span>الصبغة</span> </button> <button class="tool-button disabled" data-tool="exposure"> <span class="tool-icon">📸</span> <span>التعريض</span> </button> <button class="tool-button disabled" data-tool="highlights"> <span class="tool-icon">💡</span> <span>الإضاءات</span> </button> <button class="tool-button disabled" data-tool="shadows"> <span class="tool-icon">🌑</span> <span>الظلال</span> </button> <button class="tool-button disabled" data-tool="vibrance"> <span class="tool-icon">✨</span> <span>الحيوية</span> </button> <button class="tool-button disabled" data-tool="clarity"> <span class="tool-icon">💎</span> <span>الوضوح</span> </button> <button class="tool-button disabled" data-tool="sharpen"> <span class="tool-icon">🔍</span> <span>التوضيح</span> </button> <button class="tool-button disabled" data-tool="blur"> <span class="tool-icon">💫</span> <span>ضبابية</span> </button> <button class="tool-button disabled" data-tool="noise"> <span class="tool-icon">📡</span> <span>تقليل التشويش</span> </button> <button class="tool-button disabled" data-tool="vignette"> <span class="tool-icon">⭕</span> <span>فينييت</span> </button> <button class="tool-button disabled" data-tool="grain"> <span class="tool-icon">🌾</span> <span>حبيبات الفيلم</span> </button> <button class="tool-button disabled" data-tool="fade"> <span class="tool-icon">🌫️</span> <span>بهتان</span> </button> <button class="tool-button disabled" data-tool="grayscale"> <span class="tool-icon">⚫</span> <span>أبيض وأسود</span> </button> <button class="tool-button disabled" data-tool="sepia"> <span class="tool-icon">🟤</span> <span>سيبيا</span> </button> <button class="tool-button disabled" data-tool="invert"> <span class="tool-icon">🔄</span> <span>عكس الألوان</span> </button> <button class="tool-button disabled" data-tool="vintage"> <span class="tool-icon">📷</span> <span>فينتاج</span> </button> <button class="tool-button disabled" data-tool="warm"> <span class="tool-icon">🔥</span> <span>دافئ</span> </button> <button class="tool-button disabled" data-tool="cool"> <span class="tool-icon">❄️</span> <span>بارد</span> </button> <button class="tool-button disabled" data-tool="dramatic"> <span class="tool-icon">🎭</span> <span>درامي</span> </button> <button class="tool-button disabled" data-tool="vivid"> <span class="tool-icon">🌺</span> <span>حيوي</span> </button> <button class="tool-button disabled" data-tool="soft"> <span class="tool-icon">🌸</span> <span>ناعم</span> </button> <button class="tool-button disabled" data-tool="hdr"> <span class="tool-icon">🌅</span> <span>HDR</span> </button> <button class="tool-button disabled" data-tool="blackwhite"> <span class="tool-icon">⬛</span> <span>أبيض نقي</span> </button> <button class="tool-button disabled" data-tool="posterize"> <span class="tool-icon">🎨</span> <span>بوستر</span> </button> <button class="tool-button disabled" data-tool="pixelate"> <span class="tool-icon">🟦</span> <span>بكسل</span> </button> <button class="tool-button disabled" data-tool="emboss"> <span class="tool-icon">🗿</span> <span>نقش بارز</span> </button> <button class="tool-button disabled" data-tool="edge"> <span class="tool-icon">📐</span> <span>كشف الحواف</span> </button> <button class="tool-button disabled" data-tool="sketch"> <span class="tool-icon">✏️</span> <span>رسم</span> </button> <button class="tool-button disabled" data-tool="cartoon"> <span class="tool-icon">🎬</span> <span>كرتون</span> </button> <button class="tool-button disabled" data-tool="oil"> <span class="tool-icon">🖌️</span> <span>رسم زيتي</span> </button> <button class="tool-button disabled" data-tool="watercolor"> <span class="tool-icon">🎨</span> <span>ألوان مائية</span> </button> <button class="tool-button disabled" data-tool="neon"> <span class="tool-icon">💡</span> <span>نيون</span> </button> <button class="tool-button disabled" data-tool="glow"> <span class="tool-icon">✨</span> <span>توهج</span> </button> <button class="tool-button disabled" data-tool="shadow"> <span class="tool-icon">🌓</span> <span>ظل</span> </button> <button class="tool-button disabled" data-tool="border"> <span class="tool-icon">🖼️</span> <span>إطار</span> </button> <button class="tool-button disabled" data-tool="mirror"> <span class="tool-icon">🪞</span> <span>مرآة</span> </button> <button class="tool-button disabled" data-tool="kaleidoscope"> <span class="tool-icon">🔮</span> <span>كاليدوسكوب</span> </button> <button class="tool-button disabled" data-tool="fisheye"> <span class="tool-icon">🐟</span> <span>عين السمكة</span> </button> <button class="tool-button disabled" data-tool="bulge"> <span class="tool-icon">🔵</span> <span>انتفاخ</span> </button> <button class="tool-button disabled" data-tool="pinch"> <span class="tool-icon">📍</span> <span>قرص</span> </button> <button class="tool-button disabled" data-tool="swirl"> <span class="tool-icon">🌀</span> <span>دوامة</span> </button>
+     <h2 class="section-title">🎨 50+ أداة تحرير احترافية</h2><!-- Transform Tools -->
+     <h3 class="category-title">🔄 أدوات التحويل (9 أدوات)</h3>
+     <div class="tools-grid"><button class="tool-button disabled" data-tool="rotate" data-icon="🔄" data-label="تدوير"> <span class="tool-icon">🔄</span> <span>تدوير</span> </button> <button class="tool-button disabled" data-tool="fliph" data-icon="↔️" data-label="قلب أفقي"> <span class="tool-icon">↔️</span> <span>قلب أفقي</span> </button> <button class="tool-button disabled" data-tool="flipv" data-icon="↕️" data-label="قلب عمودي"> <span class="tool-icon">↕️</span> <span>قلب عمودي</span> </button> <button class="tool-button disabled" data-tool="mirror" data-icon="🪞" data-label="مرآة"> <span class="tool-icon">🪞</span> <span>مرآة</span> </button> <button class="tool-button disabled" data-tool="kaleidoscope" data-icon="🔮" data-label="كاليدوسكوب"> <span class="tool-icon">🔮</span> <span>كاليدوسكوب</span> </button> <button class="tool-button disabled" data-tool="fisheye" data-icon="🐟" data-label="عين السمكة"> <span class="tool-icon">🐟</span> <span>عين السمكة</span> </button> <button class="tool-button disabled" data-tool="bulge" data-icon="🎈" data-label="انتفاخ"> <span class="tool-icon">🎈</span> <span>انتفاخ</span> </button> <button class="tool-button disabled" data-tool="pinch" data-icon="🤏" data-label="قرص"> <span class="tool-icon">🤏</span> <span>قرص</span> </button> <button class="tool-button disabled" data-tool="swirl" data-icon="🌀" data-label="دوامة"> <span class="tool-icon">🌀</span> <span>دوامة</span> </button>
+     </div><!-- Lighting & Color Tools -->
+     <h3 class="category-title">💡 أدوات الإضاءة والألوان (10 أدوات)</h3>
+     <div class="tools-grid"><button class="tool-button disabled" data-tool="brightness" data-icon="☀️" data-label="السطوع"> <span class="tool-icon">☀️</span> <span id="brightnessText">السطوع</span> </button> <button class="tool-button disabled" data-tool="contrast" data-icon="◐" data-label="التباين"> <span class="tool-icon">◐</span> <span id="contrastText">التباين</span> </button> <button class="tool-button disabled" data-tool="saturation" data-icon="🌈" data-label="التشبع"> <span class="tool-icon">🌈</span> <span id="saturationText">التشبع</span> </button> <button class="tool-button disabled" data-tool="hue" data-icon="🎨" data-label="تدوير اللون"> <span class="tool-icon">🎨</span> <span>تدوير اللون</span> </button> <button class="tool-button disabled" data-tool="temperature" data-icon="🌡️" data-label="درجة الحرارة"> <span class="tool-icon">🌡️</span> <span>درجة الحرارة</span> </button> <button class="tool-button disabled" data-tool="tint" data-icon="💧" data-label="الصبغة"> <span class="tool-icon">💧</span> <span>الصبغة</span> </button> <button class="tool-button disabled" data-tool="exposure" data-icon="📸" data-label="التعريض"> <span class="tool-icon">📸</span> <span>التعريض</span> </button> <button class="tool-button disabled" data-tool="highlights" data-icon="💡" data-label="الإضاءات"> <span class="tool-icon">💡</span> <span>الإضاءات</span> </button> <button class="tool-button disabled" data-tool="shadows" data-icon="🌑" data-label="الظلال"> <span class="tool-icon">🌑</span> <span>الظلال</span> </button> <button class="tool-button disabled" data-tool="vibrance" data-icon="✨" data-label="الحيوية"> <span class="tool-icon">✨</span> <span>الحيوية</span> </button>
+     </div><!-- Sharpness Tools -->
+     <h3 class="category-title">🔍 أدوات التوضيح (5 أدوات)</h3>
+     <div class="tools-grid"><button class="tool-button disabled" data-tool="sharpen" data-icon="🔍" data-label="التوضيح"> <span class="tool-icon">🔍</span> <span>التوضيح</span> </button> <button class="tool-button disabled" data-tool="blur" data-icon="💫" data-label="الضبابية"> <span class="tool-icon">💫</span> <span>الضبابية</span> </button> <button class="tool-button disabled" data-tool="noise" data-icon="📡" data-label="تقليل التشويش"> <span class="tool-icon">📡</span> <span>تقليل التشويش</span> </button> <button class="tool-button disabled" data-tool="clarity" data-icon="💎" data-label="الوضوح"> <span class="tool-icon">💎</span> <span>الوضوح</span> </button> <button class="tool-button disabled" data-tool="enhancedclarity" data-icon="💠" data-label="الوضوح المحسّن"> <span class="tool-icon">💠</span> <span>الوضوح المحسّن</span> </button>
+     </div><!-- Professional Filters -->
+     <h3 class="category-title">🎭 فلاتر احترافية (15 فلتر)</h3>
+     <div class="tools-grid"><button class="tool-button disabled" data-tool="grayscale" data-icon="⚫" data-label="أبيض وأسود"> <span class="tool-icon">⚫</span> <span>أبيض وأسود</span> </button> <button class="tool-button disabled" data-tool="sepia" data-icon="🟤" data-label="سيبيا"> <span class="tool-icon">🟤</span> <span>سيبيا</span> </button> <button class="tool-button disabled" data-tool="invert" data-icon="🔄" data-label="عكس الألوان"> <span class="tool-icon">🔄</span> <span>عكس الألوان</span> </button> <button class="tool-button disabled" data-tool="vintage" data-icon="📷" data-label="فينتاج"> <span class="tool-icon">📷</span> <span>فينتاج</span> </button> <button class="tool-button disabled" data-tool="warm" data-icon="🔥" data-label="دافئ"> <span class="tool-icon">🔥</span> <span>دافئ</span> </button> <button class="tool-button disabled" data-tool="cool" data-icon="❄️" data-label="بارد"> <span class="tool-icon">❄️</span> <span>بارد</span> </button> <button class="tool-button disabled" data-tool="dramatic" data-icon="🎭" data-label="درامي"> <span class="tool-icon">🎭</span> <span>درامي</span> </button> <button class="tool-button disabled" data-tool="vivid" data-icon="🌺" data-label="حيوي"> <span class="tool-icon">🌺</span> <span>حيوي</span> </button> <button class="tool-button disabled" data-tool="soft" data-icon="🌸" data-label="ناعم"> <span class="tool-icon">🌸</span> <span>ناعم</span> </button> <button class="tool-button disabled" data-tool="hdr" data-icon="🌅" data-label="HDR"> <span class="tool-icon">🌅</span> <span>HDR</span> </button> <button class="tool-button disabled" data-tool="neon" data-icon="💡" data-label="نيون"> <span class="tool-icon">💡</span> <span>نيون</span> </button> <button class="tool-button disabled" data-tool="vignette" data-icon="⭕" data-label="فينييت"> <span class="tool-icon">⭕</span> <span>فينييت</span> </button> <button class="tool-button disabled" data-tool="grain" data-icon="🌾" data-label="حبيبات الفيلم"> <span class="tool-icon">🌾</span> <span>حبيبات الفيلم</span> </button> <button class="tool-button disabled" data-tool="fade" data-icon="🌫️" data-label="بهتان"> <span class="tool-icon">🌫️</span> <span>بهتان</span> </button> <button class="tool-button disabled" data-tool="glow" data-icon="✨" data-label="توهج"> <span class="tool-icon">✨</span> <span>توهج</span> </button>
+     </div><!-- Artistic Effects -->
+     <h3 class="category-title">🖌️ تأثيرات فنية (8 تأثيرات)</h3>
+     <div class="tools-grid"><button class="tool-button disabled" data-tool="posterize" data-icon="🎨" data-label="بوستر"> <span class="tool-icon">🎨</span> <span>بوستر</span> </button> <button class="tool-button disabled" data-tool="pixelate" data-icon="🟦" data-label="بكسل"> <span class="tool-icon">🟦</span> <span>بكسل</span> </button> <button class="tool-button disabled" data-tool="emboss" data-icon="🗿" data-label="نقش بارز"> <span class="tool-icon">🗿</span> <span>نقش بارز</span> </button> <button class="tool-button disabled" data-tool="edge" data-icon="📐" data-label="كشف الحواف"> <span class="tool-icon">📐</span> <span>كشف الحواف</span> </button> <button class="tool-button disabled" data-tool="sketch" data-icon="✏️" data-label="رسم"> <span class="tool-icon">✏️</span> <span>رسم</span> </button> <button class="tool-button disabled" data-tool="cartoon" data-icon="🎬" data-label="كرتون"> <span class="tool-icon">🎬</span> <span>كرتون</span> </button> <button class="tool-button disabled" data-tool="oil" data-icon="🖌️" data-label="رسم زيتي"> <span class="tool-icon">🖌️</span> <span>رسم زيتي</span> </button> <button class="tool-button disabled" data-tool="watercolor" data-icon="🎨" data-label="ألوان مائية"> <span class="tool-icon">🎨</span> <span>ألوان مائية</span> </button>
+     </div><!-- Additional Effects -->
+     <h3 class="category-title">✨ تأثيرات إضافية (3 تأثيرات)</h3>
+     <div class="tools-grid"><button class="tool-button disabled" data-tool="shadow" data-icon="🌓" data-label="ظل"> <span class="tool-icon">🌓</span> <span>ظل</span> </button> <button class="tool-button disabled" data-tool="frame" data-icon="🖼️" data-label="إطار"> <span class="tool-icon">🖼️</span> <span>إطار</span> </button> <button class="tool-button disabled" data-tool="gloweffect" data-icon="🌟" data-label="توهج محسّن"> <span class="tool-icon">🌟</span> <span>توهج محسّن</span> </button>
      </div><!-- Action Buttons -->
-     <div class="action-buttons"><button class="action-button btn-undo disabled" id="undoButton"> <span>↶</span> <span>تراجع</span> </button> <button class="action-button btn-redo disabled" id="redoButton"> <span>↷</span> <span>إعادة</span> </button> <button class="action-button btn-save disabled" id="saveButton"> <span>💾</span> <span id="saveText">حفظ</span> </button> <button class="action-button btn-share disabled" id="shareButton"> <span>📤</span> <span id="shareText">مشاركة</span> </button>
+     <div class="action-buttons"><button class="action-button btn-reset-all disabled" id="resetAllButton"> <span>🔄</span> <span>إعادة تعيين الكل</span> </button> <button class="action-button btn-save disabled" id="saveButton"> <span>💾</span> <span id="saveText">حفظ الصورة</span> </button> <button class="action-button btn-share disabled" id="shareButton"> <span>📤</span> <span>مشاركة الصورة</span> </button>
      </div>
     </section>
    </main>
+  </div><!-- Control Panel -->
+  <div class="control-panel" id="controlPanel">
+   <div class="control-header">
+    <div class="control-title"><span id="controlIcon">🎨</span> <span id="controlToolName">أداة التحرير</span>
+    </div><button class="close-control" id="closeControl">✕</button>
+   </div>
+   <div class="control-content" id="controlContent"><!-- Sliders will be dynamically added here -->
+   </div>
   </div><!-- Toast Notification -->
   <div class="toast" id="toast"></div>
   <script>
         const defaultConfig = {
             app_title: "محرر الصور الاحترافي",
             upload_button_text: "اختر صورة للبدء",
-            resize_text: "تغيير الحجم",
-            rotate_text: "تدوير",
-            crop_text: "قص",
             brightness_text: "السطوع",
             contrast_text: "التباين",
             saturation_text: "التشبع",
-            save_text: "حفظ",
-            share_text: "مشاركة",
+            save_text: "حفظ الصورة",
             primary_color: "#667eea",
-            secondary_color: "#764ba2",
             font_family: "Segoe UI",
             font_size: 16
         };
 
         let currentImage = null;
+        let originalImageData = null;
         let imageFilters = {
-            brightness: 100,
-            contrast: 100,
-            saturation: 100,
-            blur: 0,
-            rotation: 0
+            // Transform
+            rotate: 0, fliph: 1, flipv: 1, mirror: 0, kaleidoscope: 0, fisheye: 0, bulge: 0, pinch: 0, swirl: 0,
+            // Lighting & Color
+            brightness: 100, contrast: 100, saturation: 100, hue: 0, temperature: 0, tint: 0, exposure: 0, highlights: 0, shadows: 0, vibrance: 0,
+            // Sharpness
+            sharpen: 0, blur: 0, noise: 0, clarity: 0, enhancedclarity: 0,
+            // Filters
+            grayscale: 0, sepia: 0, invert: 0, vintage: 0, warm: 0, cool: 0, dramatic: 0, vivid: 0, soft: 0, hdr: 0, neon: 0, vignette: 0, grain: 0, fade: 0, glow: 0,
+            // Artistic
+            posterize: 0, pixelate: 0, emboss: 0, edge: 0, sketch: 0, cartoon: 0, oil: 0, watercolor: 0,
+            // Additional
+            shadow: 0, frame: 0, gloweffect: 0
         };
+
+        let currentTool = null;
 
         const elements = {
             appTitle: document.getElementById('appTitle'),
@@ -415,19 +648,84 @@
             fileInput: document.getElementById('fileInput'),
             imageDisplay: document.getElementById('imageDisplay'),
             toolButtons: document.querySelectorAll('.tool-button'),
-            undoButton: document.getElementById('undoButton'),
-            redoButton: document.getElementById('redoButton'),
+            resetAllButton: document.getElementById('resetAllButton'),
             saveButton: document.getElementById('saveButton'),
             shareButton: document.getElementById('shareButton'),
             toast: document.getElementById('toast'),
-            resizeText: document.getElementById('resizeText'),
-            rotateText: document.getElementById('rotateText'),
-            cropText: document.getElementById('cropText'),
             brightnessText: document.getElementById('brightnessText'),
             contrastText: document.getElementById('contrastText'),
             saturationText: document.getElementById('saturationText'),
             saveText: document.getElementById('saveText'),
-            shareText: document.getElementById('shareText')
+            controlPanel: document.getElementById('controlPanel'),
+            closeControl: document.getElementById('closeControl'),
+            controlContent: document.getElementById('controlContent'),
+            controlToolName: document.getElementById('controlToolName'),
+            controlIcon: document.getElementById('controlIcon'),
+            effectCanvas: document.getElementById('effectCanvas')
+        };
+
+        const toolConfigs = {
+            // Transform Tools
+            rotate: { min: 0, max: 360, default: 0, unit: '°', label: 'تدوير' },
+            fliph: { min: -1, max: 1, default: 1, unit: '', label: 'قلب أفقي', step: 2 },
+            flipv: { min: -1, max: 1, default: 1, unit: '', label: 'قلب عمودي', step: 2 },
+            mirror: { min: 0, max: 100, default: 0, unit: '%', label: 'مرآة' },
+            kaleidoscope: { min: 0, max: 12, default: 0, unit: '', label: 'كاليدوسكوب' },
+            fisheye: { min: 0, max: 100, default: 0, unit: '%', label: 'عين السمكة' },
+            bulge: { min: -100, max: 100, default: 0, unit: '%', label: 'انتفاخ' },
+            pinch: { min: -100, max: 100, default: 0, unit: '%', label: 'قرص' },
+            swirl: { min: -360, max: 360, default: 0, unit: '°', label: 'دوامة' },
+            
+            // Lighting & Color
+            brightness: { min: 0, max: 200, default: 100, unit: '%', label: 'السطوع' },
+            contrast: { min: 0, max: 200, default: 100, unit: '%', label: 'التباين' },
+            saturation: { min: 0, max: 200, default: 100, unit: '%', label: 'التشبع' },
+            hue: { min: 0, max: 360, default: 0, unit: '°', label: 'تدوير اللون' },
+            temperature: { min: -100, max: 100, default: 0, unit: '', label: 'درجة الحرارة' },
+            tint: { min: -100, max: 100, default: 0, unit: '', label: 'الصبغة' },
+            exposure: { min: -100, max: 100, default: 0, unit: '', label: 'التعريض' },
+            highlights: { min: -100, max: 100, default: 0, unit: '', label: 'الإضاءات' },
+            shadows: { min: -100, max: 100, default: 0, unit: '', label: 'الظلال' },
+            vibrance: { min: 0, max: 200, default: 0, unit: '%', label: 'الحيوية' },
+            
+            // Sharpness
+            sharpen: { min: 0, max: 100, default: 0, unit: '%', label: 'التوضيح' },
+            blur: { min: 0, max: 20, default: 0, unit: 'px', label: 'الضبابية' },
+            noise: { min: 0, max: 100, default: 0, unit: '%', label: 'تقليل التشويش' },
+            clarity: { min: 0, max: 100, default: 0, unit: '%', label: 'الوضوح' },
+            enhancedclarity: { min: 0, max: 100, default: 0, unit: '%', label: 'الوضوح المحسّن' },
+            
+            // Filters
+            grayscale: { min: 0, max: 100, default: 0, unit: '%', label: 'أبيض وأسود' },
+            sepia: { min: 0, max: 100, default: 0, unit: '%', label: 'سيبيا' },
+            invert: { min: 0, max: 100, default: 0, unit: '%', label: 'عكس الألوان' },
+            vintage: { min: 0, max: 100, default: 0, unit: '%', label: 'فينتاج' },
+            warm: { min: 0, max: 100, default: 0, unit: '%', label: 'دافئ' },
+            cool: { min: 0, max: 100, default: 0, unit: '%', label: 'بارد' },
+            dramatic: { min: 0, max: 100, default: 0, unit: '%', label: 'درامي' },
+            vivid: { min: 0, max: 100, default: 0, unit: '%', label: 'حيوي' },
+            soft: { min: 0, max: 100, default: 0, unit: '%', label: 'ناعم' },
+            hdr: { min: 0, max: 100, default: 0, unit: '%', label: 'HDR' },
+            neon: { min: 0, max: 100, default: 0, unit: '%', label: 'نيون' },
+            vignette: { min: 0, max: 100, default: 0, unit: '%', label: 'فينييت' },
+            grain: { min: 0, max: 100, default: 0, unit: '%', label: 'حبيبات الفيلم' },
+            fade: { min: 0, max: 100, default: 0, unit: '%', label: 'بهتان' },
+            glow: { min: 0, max: 100, default: 0, unit: '%', label: 'توهج' },
+            
+            // Artistic
+            posterize: { min: 0, max: 100, default: 0, unit: '%', label: 'بوستر' },
+            pixelate: { min: 0, max: 20, default: 0, unit: 'px', label: 'بكسل' },
+            emboss: { min: 0, max: 100, default: 0, unit: '%', label: 'نقش بارز' },
+            edge: { min: 0, max: 100, default: 0, unit: '%', label: 'كشف الحواف' },
+            sketch: { min: 0, max: 100, default: 0, unit: '%', label: 'رسم' },
+            cartoon: { min: 0, max: 100, default: 0, unit: '%', label: 'كرتون' },
+            oil: { min: 0, max: 100, default: 0, unit: '%', label: 'رسم زيتي' },
+            watercolor: { min: 0, max: 100, default: 0, unit: '%', label: 'ألوان مائية' },
+            
+            // Additional
+            shadow: { min: 0, max: 100, default: 0, unit: '%', label: 'ظل' },
+            frame: { min: 0, max: 50, default: 0, unit: 'px', label: 'إطار' },
+            gloweffect: { min: 0, max: 100, default: 0, unit: '%', label: 'توهج محسّن' }
         };
 
         async function onConfigChange(config) {
@@ -435,14 +733,10 @@
             
             elements.appTitle.textContent = finalConfig.app_title;
             elements.uploadButtonText.textContent = finalConfig.upload_button_text;
-            elements.resizeText.textContent = finalConfig.resize_text;
-            elements.rotateText.textContent = finalConfig.rotate_text;
-            elements.cropText.textContent = finalConfig.crop_text;
             elements.brightnessText.textContent = finalConfig.brightness_text;
             elements.contrastText.textContent = finalConfig.contrast_text;
             elements.saturationText.textContent = finalConfig.saturation_text;
             elements.saveText.textContent = finalConfig.save_text;
-            elements.shareText.textContent = finalConfig.share_text;
 
             const baseSize = finalConfig.font_size;
             const customFont = finalConfig.font_family;
@@ -459,6 +753,9 @@
             document.querySelectorAll('.action-button').forEach(btn => {
                 btn.style.fontSize = `${baseSize}px`;
             });
+
+            const primaryColor = finalConfig.primary_color;
+            document.documentElement.style.setProperty('--primary-color', primaryColor);
         }
 
         function mapToCapabilities(config) {
@@ -498,14 +795,10 @@
             return new Map([
                 ["app_title", finalConfig.app_title],
                 ["upload_button_text", finalConfig.upload_button_text],
-                ["resize_text", finalConfig.resize_text],
-                ["rotate_text", finalConfig.rotate_text],
-                ["crop_text", finalConfig.crop_text],
                 ["brightness_text", finalConfig.brightness_text],
                 ["contrast_text", finalConfig.contrast_text],
                 ["saturation_text", finalConfig.saturation_text],
-                ["save_text", finalConfig.save_text],
-                ["share_text", finalConfig.share_text]
+                ["save_text", finalConfig.save_text]
             ]);
         }
 
@@ -530,18 +823,262 @@
             elements.toolButtons.forEach(btn => btn.classList.remove('disabled'));
             elements.saveButton.classList.remove('disabled');
             elements.shareButton.classList.remove('disabled');
+            elements.resetAllButton.classList.remove('disabled');
         }
 
         function displayImage(file) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 currentImage = e.target.result;
+                const img = new Image();
+                img.onload = function() {
+                    elements.effectCanvas.width = img.width;
+                    elements.effectCanvas.height = img.height;
+                    const ctx = elements.effectCanvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    originalImageData = ctx.getImageData(0, 0, img.width, img.height);
+                };
+                img.src = currentImage;
+                
                 elements.imageDisplay.innerHTML = `<img src="${currentImage}" alt="Selected photo" id="displayedImage">`;
                 elements.imageDisplay.classList.add('has-image');
                 enableTools();
                 showToast('✅ تم تحميل الصورة بنجاح!');
             };
             reader.readAsDataURL(file);
+        }
+
+        function openControlPanel(tool, icon, label) {
+            currentTool = tool;
+            elements.controlIcon.textContent = icon;
+            elements.controlToolName.textContent = label;
+            
+            const config = toolConfigs[tool];
+            const currentValue = imageFilters[tool];
+            
+            elements.controlContent.innerHTML = `
+                <div class="slider-container">
+                    <div class="slider-label">
+                        <span>${config.label}</span>
+                        <span class="slider-value" id="sliderValue">${currentValue}${config.unit}</span>
+                    </div>
+                    <input type="range" class="slider" id="toolSlider" 
+                           min="${config.min}" max="${config.max}" value="${currentValue}" ${config.step ? `step="${config.step}"` : ''}>
+                </div>
+                <div class="control-buttons">
+                    <button class="control-btn btn-reset" id="resetBtn">إعادة تعيين</button>
+                    <button class="control-btn btn-apply" id="applyBtn">تطبيق</button>
+                </div>
+            `;
+            
+            const slider = document.getElementById('toolSlider');
+            const sliderValue = document.getElementById('sliderValue');
+            const resetBtn = document.getElementById('resetBtn');
+            const applyBtn = document.getElementById('applyBtn');
+            
+            slider.addEventListener('input', (e) => {
+                let value = parseFloat(e.target.value);
+                
+                if (tool === 'fliph' || tool === 'flipv') {
+                    sliderValue.textContent = value === 1 ? 'عادي' : 'مقلوب';
+                } else {
+                    sliderValue.textContent = `${value}${config.unit}`;
+                }
+                
+                imageFilters[tool] = value;
+                applyFilters();
+            });
+            
+            resetBtn.addEventListener('click', () => {
+                imageFilters[tool] = config.default;
+                slider.value = config.default;
+                sliderValue.textContent = `${config.default}${config.unit}`;
+                applyFilters();
+                showToast('🔄 تم إعادة التعيين');
+            });
+            
+            applyBtn.addEventListener('click', () => {
+                elements.controlPanel.classList.remove('active');
+                document.querySelectorAll('.tool-button').forEach(btn => btn.classList.remove('active'));
+                showToast('✅ تم تطبيق التعديلات');
+            });
+            
+            elements.controlPanel.classList.add('active');
+        }
+
+        function closeControlPanel() {
+            elements.controlPanel.classList.remove('active');
+            document.querySelectorAll('.tool-button').forEach(btn => btn.classList.remove('active'));
+        }
+
+        function applyFilters() {
+            const img = document.getElementById('displayedImage');
+            if (!img) return;
+            
+            // Calculate combined values
+            let brightness = imageFilters.brightness + (imageFilters.exposure * 0.5) + (imageFilters.highlights * 0.3);
+            let contrast = imageFilters.contrast + (imageFilters.sharpen * 0.5) + (imageFilters.clarity * 0.3) + (imageFilters.enhancedclarity * 0.5);
+            let saturation = imageFilters.saturation + (imageFilters.vibrance * 0.5);
+            let hue = imageFilters.hue + (imageFilters.temperature * 0.3) + (imageFilters.tint * 0.2);
+            
+            // Apply filter presets
+            if (imageFilters.vintage > 0) {
+                const amount = imageFilters.vintage / 100;
+                imageFilters.sepia = Math.min(100, 60 * amount);
+                contrast = contrast * (1 - 0.1 * amount);
+                brightness = brightness * (1 + 0.1 * amount);
+            }
+            
+            if (imageFilters.warm > 0) {
+                const amount = imageFilters.warm / 100;
+                hue += 20 * amount;
+                saturation = saturation * (1 + 0.2 * amount);
+            }
+            
+            if (imageFilters.cool > 0) {
+                const amount = imageFilters.cool / 100;
+                hue -= 20 * amount;
+                saturation = saturation * (1 + 0.1 * amount);
+            }
+            
+            if (imageFilters.dramatic > 0) {
+                const amount = imageFilters.dramatic / 100;
+                contrast = contrast * (1 + 0.5 * amount);
+                saturation = saturation * (1 + 0.3 * amount);
+                brightness = brightness * (1 - 0.1 * amount);
+            }
+            
+            if (imageFilters.vivid > 0) {
+                const amount = imageFilters.vivid / 100;
+                saturation = saturation * (1 + 0.6 * amount);
+                contrast = contrast * (1 + 0.2 * amount);
+            }
+            
+            if (imageFilters.soft > 0) {
+                const amount = imageFilters.soft / 100;
+                brightness = brightness * (1 + 0.1 * amount);
+                contrast = contrast * (1 - 0.1 * amount);
+            }
+            
+            if (imageFilters.hdr > 0) {
+                const amount = imageFilters.hdr / 100;
+                contrast = contrast * (1 + 0.4 * amount);
+                saturation = saturation * (1 + 0.3 * amount);
+                brightness = brightness * (1 + 0.05 * amount);
+            }
+            
+            if (imageFilters.neon > 0) {
+                const amount = imageFilters.neon / 100;
+                saturation = saturation * (1 + amount);
+                contrast = contrast * (1 + 0.5 * amount);
+                brightness = brightness * (1 + 0.2 * amount);
+            }
+            
+            // Build filter string
+            let filterString = `
+                brightness(${brightness}%)
+                contrast(${contrast}%)
+                saturate(${saturation}%)
+                hue-rotate(${hue}deg)
+                blur(${imageFilters.blur + (imageFilters.soft * 0.01)}px)
+                sepia(${imageFilters.sepia}%)
+                grayscale(${imageFilters.grayscale}%)
+                invert(${imageFilters.invert}%)
+            `;
+            
+            img.style.filter = filterString;
+            
+            // Apply transform with distortion effects
+            let transformString = `rotate(${imageFilters.rotate}deg)`;
+            
+            // Apply flip
+            const scaleX = imageFilters.fliph;
+            const scaleY = imageFilters.flipv;
+            transformString += ` scaleX(${scaleX}) scaleY(${scaleY})`;
+            
+            // Apply perspective effects for fisheye, bulge, pinch
+            if (imageFilters.fisheye > 0) {
+                const fisheyeAmount = 1 + (imageFilters.fisheye / 100);
+                transformString += ` perspective(${500 / fisheyeAmount}px)`;
+            }
+            
+            if (imageFilters.bulge !== 0) {
+                const bulgeAmount = 1 + (imageFilters.bulge / 200);
+                transformString += ` scale(${bulgeAmount})`;
+            }
+            
+            if (imageFilters.pinch !== 0) {
+                const pinchAmount = 1 - (imageFilters.pinch / 200);
+                transformString += ` scale(${pinchAmount})`;
+            }
+            
+            // Apply swirl rotation
+            if (imageFilters.swirl !== 0) {
+                transformString += ` rotate(${imageFilters.swirl}deg)`;
+            }
+            
+            img.style.transform = transformString;
+            
+            // Apply mirror effect
+            if (imageFilters.mirror > 0) {
+                const mirrorAmount = imageFilters.mirror / 100;
+                img.style.clipPath = `polygon(${50 - mirrorAmount * 50}% 0%, ${50 + mirrorAmount * 50}% 0%, ${50 + mirrorAmount * 50}% 100%, ${50 - mirrorAmount * 50}% 100%)`;
+            } else {
+                img.style.clipPath = 'none';
+            }
+            
+            // Apply kaleidoscope effect (simulated with multiple reflections)
+            if (imageFilters.kaleidoscope > 0) {
+                const segments = Math.floor(imageFilters.kaleidoscope);
+                if (segments > 0) {
+                    const angle = 360 / segments;
+                    img.style.filter += ` hue-rotate(${angle}deg)`;
+                }
+            }
+            
+            // Apply effects
+            let boxShadow = '';
+            
+            if (imageFilters.vignette > 0) {
+                const vignetteAmount = imageFilters.vignette / 100;
+                boxShadow += `inset 0 0 ${100 * vignetteAmount}px ${50 * vignetteAmount}px rgba(0,0,0,${0.5 * vignetteAmount})`;
+            }
+            
+            if (imageFilters.shadow > 0) {
+                const shadowAmount = imageFilters.shadow / 100;
+                if (boxShadow) boxShadow += ', ';
+                boxShadow += `0 ${20 * shadowAmount}px ${40 * shadowAmount}px rgba(0,0,0,${0.5 * shadowAmount})`;
+            }
+            
+            if (imageFilters.glow > 0 || imageFilters.gloweffect > 0) {
+                const glowAmount = (imageFilters.glow + imageFilters.gloweffect) / 100;
+                if (boxShadow) boxShadow += ', ';
+                boxShadow += `0 0 ${30 * glowAmount}px ${15 * glowAmount}px rgba(255,255,255,${0.8 * glowAmount})`;
+            }
+            
+            img.style.boxShadow = boxShadow;
+            
+            // Apply frame
+            if (imageFilters.frame > 0) {
+                img.style.border = `${imageFilters.frame}px solid #fff`;
+                img.style.outline = `${imageFilters.frame / 2}px solid #333`;
+            } else {
+                img.style.border = 'none';
+                img.style.outline = 'none';
+            }
+            
+            // Apply opacity for fade
+            if (imageFilters.fade > 0) {
+                img.style.opacity = 1 - (imageFilters.fade / 200);
+            } else {
+                img.style.opacity = 1;
+            }
+            
+            // Apply grain effect
+            if (imageFilters.grain > 0) {
+                const grainAmount = imageFilters.grain / 100;
+                img.style.filter += ` contrast(${100 + grainAmount * 10}%)`;
+            }
         }
 
         elements.uploadButton.addEventListener('click', () => {
@@ -554,184 +1091,33 @@
             }
         });
 
-        let flipH = 1;
-        let flipV = 1;
-        let hueRotate = 0;
-        let grayscaleValue = 0;
-        let sepiaValue = 0;
-        let invertValue = 0;
-
         elements.toolButtons.forEach(button => {
             button.addEventListener('click', () => {
+                if (button.classList.contains('disabled')) return;
+                
                 const tool = button.dataset.tool;
-                const img = document.getElementById('displayedImage');
-                if (!img) return;
-
-                switch(tool) {
-                    case 'rotate':
-                        imageFilters.rotation = (imageFilters.rotation + 90) % 360;
-                        updateTransform(img);
-                        showToast('🔄 تم تدوير الصورة');
-                        break;
-                    case 'flip':
-                        flipH *= -1;
-                        updateTransform(img);
-                        showToast('↔️ تم القلب الأفقي');
-                        break;
-                    case 'flipv':
-                        flipV *= -1;
-                        updateTransform(img);
-                        showToast('↕️ تم القلب العمودي');
-                        break;
-                    case 'brightness':
-                        imageFilters.brightness = imageFilters.brightness === 100 ? 150 : 100;
-                        applyFilters(img);
-                        showToast('☀️ تم تعديل السطوع');
-                        break;
-                    case 'contrast':
-                        imageFilters.contrast = imageFilters.contrast === 100 ? 150 : 100;
-                        applyFilters(img);
-                        showToast('◐ تم تعديل التباين');
-                        break;
-                    case 'saturation':
-                        imageFilters.saturation = imageFilters.saturation === 100 ? 150 : 100;
-                        applyFilters(img);
-                        showToast('🌈 تم تعديل التشبع');
-                        break;
-                    case 'hue':
-                        hueRotate = (hueRotate + 60) % 360;
-                        applyFilters(img);
-                        showToast('🎨 تم تدوير اللون');
-                        break;
-                    case 'temperature':
-                        hueRotate = hueRotate === 0 ? 30 : 0;
-                        applyFilters(img);
-                        showToast('🌡️ تم تعديل درجة الحرارة');
-                        break;
-                    case 'exposure':
-                        imageFilters.brightness = imageFilters.brightness === 100 ? 130 : 100;
-                        applyFilters(img);
-                        showToast('📸 تم تعديل التعريض');
-                        break;
-                    case 'clarity':
-                        imageFilters.contrast = imageFilters.contrast === 100 ? 120 : 100;
-                        imageFilters.saturation = imageFilters.saturation === 100 ? 110 : 100;
-                        applyFilters(img);
-                        showToast('💎 تم تحسين الوضوح');
-                        break;
-                    case 'sharpen':
-                        imageFilters.contrast = imageFilters.contrast === 100 ? 130 : 100;
-                        applyFilters(img);
-                        showToast('🔍 تم التوضيح');
-                        break;
-                    case 'blur':
-                        imageFilters.blur = imageFilters.blur === 0 ? 5 : 0;
-                        applyFilters(img);
-                        showToast('💫 تم تطبيق الضبابية');
-                        break;
-                    case 'grayscale':
-                        grayscaleValue = grayscaleValue === 0 ? 100 : 0;
-                        applyFilters(img);
-                        showToast('⚫ تم تطبيق أبيض وأسود');
-                        break;
-                    case 'sepia':
-                        sepiaValue = sepiaValue === 0 ? 100 : 0;
-                        applyFilters(img);
-                        showToast('🟤 تم تطبيق سيبيا');
-                        break;
-                    case 'invert':
-                        invertValue = invertValue === 0 ? 100 : 0;
-                        applyFilters(img);
-                        showToast('🔄 تم عكس الألوان');
-                        break;
-                    case 'vintage':
-                        sepiaValue = 60;
-                        imageFilters.contrast = 90;
-                        imageFilters.brightness = 110;
-                        applyFilters(img);
-                        showToast('📷 تم تطبيق فينتاج');
-                        break;
-                    case 'warm':
-                        hueRotate = 20;
-                        imageFilters.saturation = 120;
-                        applyFilters(img);
-                        showToast('🔥 تم تطبيق فلتر دافئ');
-                        break;
-                    case 'cool':
-                        hueRotate = -20;
-                        imageFilters.saturation = 110;
-                        applyFilters(img);
-                        showToast('❄️ تم تطبيق فلتر بارد');
-                        break;
-                    case 'dramatic':
-                        imageFilters.contrast = 150;
-                        imageFilters.saturation = 130;
-                        imageFilters.brightness = 90;
-                        applyFilters(img);
-                        showToast('🎭 تم تطبيق فلتر درامي');
-                        break;
-                    case 'vivid':
-                        imageFilters.saturation = 160;
-                        imageFilters.contrast = 120;
-                        applyFilters(img);
-                        showToast('🌺 تم تطبيق فلتر حيوي');
-                        break;
-                    case 'soft':
-                        imageFilters.brightness = 110;
-                        imageFilters.contrast = 90;
-                        imageFilters.blur = 1;
-                        applyFilters(img);
-                        showToast('🌸 تم تطبيق فلتر ناعم');
-                        break;
-                    case 'hdr':
-                        imageFilters.contrast = 140;
-                        imageFilters.saturation = 130;
-                        imageFilters.brightness = 105;
-                        applyFilters(img);
-                        showToast('🌅 تم تطبيق HDR');
-                        break;
-                    case 'blackwhite':
-                        grayscaleValue = 100;
-                        imageFilters.contrast = 150;
-                        applyFilters(img);
-                        showToast('⬛ تم تطبيق أبيض نقي');
-                        break;
-                    case 'neon':
-                        imageFilters.saturation = 200;
-                        imageFilters.contrast = 150;
-                        imageFilters.brightness = 120;
-                        applyFilters(img);
-                        showToast('💡 تم تطبيق نيون');
-                        break;
-                    case 'glow':
-                        imageFilters.brightness = 130;
-                        imageFilters.blur = 2;
-                        applyFilters(img);
-                        showToast('✨ تم تطبيق توهج');
-                        break;
-                    case 'border':
-                        img.style.border = img.style.border ? '' : '20px solid white';
-                        img.style.boxShadow = img.style.border ? '0 0 30px rgba(0,0,0,0.5)' : '';
-                        showToast('🖼️ تم إضافة إطار');
-                        break;
-                    case 'mirror':
-                        flipH *= -1;
-                        updateTransform(img);
-                        showToast('🪞 تم عكس الصورة');
-                        break;
-                    default:
-                        showToast(`✨ تم تفعيل أداة ${button.textContent.trim()}`);
-                }
+                const icon = button.dataset.icon;
+                const label = button.dataset.label;
+                
+                document.querySelectorAll('.tool-button').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                openControlPanel(tool, icon, label);
             });
         });
 
-        function updateTransform(img) {
-            img.style.transform = `rotate(${imageFilters.rotation}deg) scaleX(${flipH}) scaleY(${flipV})`;
-        }
+        elements.closeControl.addEventListener('click', closeControlPanel);
 
-        function applyFilters(img) {
-            img.style.filter = `brightness(${imageFilters.brightness}%) contrast(${imageFilters.contrast}%) saturate(${imageFilters.saturation}%) blur(${imageFilters.blur}px) hue-rotate(${hueRotate}deg) grayscale(${grayscaleValue}%) sepia(${sepiaValue}%) invert(${invertValue}%)`;
-        }
+        elements.resetAllButton.addEventListener('click', () => {
+            Object.keys(imageFilters).forEach(key => {
+                const config = toolConfigs[key];
+                if (config) {
+                    imageFilters[key] = config.default;
+                }
+            });
+            applyFilters();
+            showToast('🔄 تم إعادة تعيين جميع التعديلات');
+        });
 
         elements.saveButton.addEventListener('click', () => {
             if (!currentImage) return;
@@ -766,36 +1152,32 @@
             ctx.drawImage(img, 0, 0);
             
             canvas.toBlob(async (blob) => {
-                const file = new File([blob], 'photo.png', { type: 'image/png' });
+                const file = new File([blob], `edited_photo_${Date.now()}.png`, { type: 'image/png' });
                 
-                if (navigator.share) {
+                if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
                     try {
                         await navigator.share({
                             files: [file],
-                            title: 'صورتي المعدلة',
-                            text: 'شاهد صورتي المعدلة!'
+                            title: 'صورة معدلة',
+                            text: 'تم تعديل هذه الصورة باستخدام محرر الصور الاحترافي'
                         });
                         showToast('📤 تمت المشاركة بنجاح!');
-                    } catch (err) {
-                        if (err.name !== 'AbortError') {
-                            showToast('⚠️ فشلت المشاركة');
+                    } catch (error) {
+                        if (error.name !== 'AbortError') {
+                            showToast('❌ فشلت المشاركة. جرب الحفظ بدلاً من ذلك.');
                         }
                     }
                 } else {
-                    showToast('⚠️ المشاركة غير مدعومة في هذا المتصفح');
+                    const link = document.createElement('a');
+                    link.download = `edited_photo_${Date.now()}.png`;
+                    link.href = canvas.toDataURL();
+                    link.click();
+                    showToast('💾 تم حفظ الصورة! (المشاركة غير مدعومة في هذا المتصفح)');
                 }
-            });
-        });
-
-        elements.undoButton.addEventListener('click', () => {
-            showToast('↶ تم التراجع');
-        });
-
-        elements.redoButton.addEventListener('click', () => {
-            showToast('↷ تم الإعادة');
+            }, 'image/png');
         });
 
         onConfigChange(defaultConfig);
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99a96eca311c794b',t:'MTc2MjQ4Mjg3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99a99b2572dc794b',t:'MTc2MjQ4NDY5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
