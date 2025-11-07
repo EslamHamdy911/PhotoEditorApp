@@ -101,7 +101,8 @@
         .image-display {
             width: 100%;
             max-width: 1200px;
-            height: 600px;
+            height: 50%;
+            min-height: 400px;
             margin: 0 auto 40px;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             border-radius: 15px;
@@ -142,7 +143,7 @@
             font-weight: 500;
         }
 
-        /* Tools Grid */
+        /* Tools Section */
         .tools-section {
             margin-top: 40px;
         }
@@ -159,25 +160,163 @@
             background-clip: text;
         }
 
-        .category-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #4a5568;
-            margin: 30px 0 15px 0;
-            padding: 10px 20px;
+        /* Tabs Container */
+        .tabs-container {
+            margin: 30px 0 20px 0;
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: 10px;
-            border-right: 4px solid #667eea;
+            border-radius: 20px;
+            padding: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
 
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        .tabs-scroll {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 5px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: #667eea #e9ecef;
+        }
+
+        .tabs-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .tabs-scroll::-webkit-scrollbar-track {
+            background: #e9ecef;
+            border-radius: 10px;
+        }
+
+        .tabs-scroll::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+
+        .tab-button {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 20px;
+            background: white;
+            border: 2px solid transparent;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 100px;
+            position: relative;
+        }
+
+        .tab-button:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .tab-button:hover .tab-icon,
+        .tab-button:hover .tab-label,
+        .tab-button:hover .tab-count {
+            color: white;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: #667eea;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .tab-button.active .tab-icon,
+        .tab-button.active .tab-label,
+        .tab-button.active .tab-count {
+            color: white;
+        }
+
+        .tab-icon {
+            font-size: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tab-count {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 12px;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        /* Tools Content */
+        .tools-content {
+            position: relative;
+            min-height: 150px;
+        }
+
+        .tools-panel {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tools-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tools-scroll {
+            display: flex;
             gap: 15px;
-            margin-bottom: 30px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 20px 5px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: #667eea #e9ecef;
+        }
+
+        .tools-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .tools-scroll::-webkit-scrollbar-track {
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .tools-scroll::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
         }
 
         .tool-button {
+            flex-shrink: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -192,6 +331,7 @@
             font-size: 14px;
             font-weight: 600;
             color: #4a5568;
+            min-width: 110px;
         }
 
         .tool-button:hover {
@@ -231,14 +371,14 @@
             left: 0;
             right: 0;
             background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,1) 100%);
-            padding: 30px;
+            padding: 20px;
             box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
             transform: translateY(100%);
             transition: transform 0.4s ease;
             z-index: 2000;
             border-top-left-radius: 30px;
             border-top-right-radius: 30px;
-            max-height: 80%;
+            max-height: 35%;
             overflow-y: auto;
         }
 
@@ -385,16 +525,6 @@
             box-shadow: 0 6px 20px rgba(240, 147, 251, 0.4);
         }
 
-        .btn-apply {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            color: white;
-        }
-
-        .btn-apply:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(67, 233, 123, 0.4);
-        }
-
         /* Action Buttons */
         .action-buttons {
             display: flex;
@@ -493,15 +623,48 @@
             }
 
             .image-display {
-                height: 300px;
+                height: 45%;
+                min-height: 300px;
+                margin-bottom: 20px;
             }
 
-            .tools-grid {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            .tabs-container {
+                margin: 20px 0 15px 0;
+                padding: 8px;
+            }
+
+            .tabs-scroll {
+                gap: 8px;
+            }
+
+            .tab-button {
+                min-width: 85px;
+                padding: 12px 15px;
+                gap: 6px;
+            }
+
+            .tab-icon {
+                font-size: 24px;
+            }
+
+            .tab-label {
+                font-size: 12px;
+            }
+
+            .tab-count {
+                font-size: 10px;
+                padding: 2px 6px;
+                top: 6px;
+                left: 6px;
+            }
+
+            .tools-scroll {
                 gap: 10px;
+                padding: 15px 5px;
             }
 
             .tool-button {
+                min-width: 95px;
                 padding: 15px 10px;
                 font-size: 12px;
             }
@@ -511,20 +674,32 @@
             }
 
             .control-panel {
-                padding: 20px;
+                padding: 15px;
+                max-height: 40%;
             }
 
             .control-title {
-                font-size: 20px;
+                font-size: 18px;
+            }
+
+            .control-header {
+                margin-bottom: 15px;
+            }
+
+            .slider-container {
+                margin-bottom: 15px;
             }
 
             .action-buttons {
-                flex-direction: column;
+                flex-direction: row;
+                gap: 10px;
             }
 
             .action-button {
-                width: 100%;
+                flex: 1;
                 justify-content: center;
+                padding: 12px 20px;
+                font-size: 14px;
             }
         }
 
@@ -543,10 +718,6 @@
 
             .app-title {
                 font-size: 24px;
-            }
-
-            .tools-grid {
-                grid-template-columns: repeat(3, 1fr);
             }
         }
     </style>
@@ -576,24 +747,36 @@
      <canvas id="effectCanvas"></canvas>
     </div><!-- Tools Section -->
     <section class="tools-section">
-     <h2 class="section-title">🎨 50+ أداة تحرير احترافية</h2><!-- Transform Tools -->
-     <h3 class="category-title">🔄 أدوات التحويل (9 أدوات)</h3>
-     <div class="tools-grid"><button class="tool-button disabled" data-tool="rotate" data-icon="🔄" data-label="تدوير"> <span class="tool-icon">🔄</span> <span>تدوير</span> </button> <button class="tool-button disabled" data-tool="fliph" data-icon="↔️" data-label="قلب أفقي"> <span class="tool-icon">↔️</span> <span>قلب أفقي</span> </button> <button class="tool-button disabled" data-tool="flipv" data-icon="↕️" data-label="قلب عمودي"> <span class="tool-icon">↕️</span> <span>قلب عمودي</span> </button> <button class="tool-button disabled" data-tool="mirror" data-icon="🪞" data-label="مرآة"> <span class="tool-icon">🪞</span> <span>مرآة</span> </button> <button class="tool-button disabled" data-tool="kaleidoscope" data-icon="🔮" data-label="كاليدوسكوب"> <span class="tool-icon">🔮</span> <span>كاليدوسكوب</span> </button> <button class="tool-button disabled" data-tool="fisheye" data-icon="🐟" data-label="عين السمكة"> <span class="tool-icon">🐟</span> <span>عين السمكة</span> </button> <button class="tool-button disabled" data-tool="bulge" data-icon="🎈" data-label="انتفاخ"> <span class="tool-icon">🎈</span> <span>انتفاخ</span> </button> <button class="tool-button disabled" data-tool="pinch" data-icon="🤏" data-label="قرص"> <span class="tool-icon">🤏</span> <span>قرص</span> </button> <button class="tool-button disabled" data-tool="swirl" data-icon="🌀" data-label="دوامة"> <span class="tool-icon">🌀</span> <span>دوامة</span> </button>
-     </div><!-- Lighting & Color Tools -->
-     <h3 class="category-title">💡 أدوات الإضاءة والألوان (10 أدوات)</h3>
-     <div class="tools-grid"><button class="tool-button disabled" data-tool="brightness" data-icon="☀️" data-label="السطوع"> <span class="tool-icon">☀️</span> <span id="brightnessText">السطوع</span> </button> <button class="tool-button disabled" data-tool="contrast" data-icon="◐" data-label="التباين"> <span class="tool-icon">◐</span> <span id="contrastText">التباين</span> </button> <button class="tool-button disabled" data-tool="saturation" data-icon="🌈" data-label="التشبع"> <span class="tool-icon">🌈</span> <span id="saturationText">التشبع</span> </button> <button class="tool-button disabled" data-tool="hue" data-icon="🎨" data-label="تدوير اللون"> <span class="tool-icon">🎨</span> <span>تدوير اللون</span> </button> <button class="tool-button disabled" data-tool="temperature" data-icon="🌡️" data-label="درجة الحرارة"> <span class="tool-icon">🌡️</span> <span>درجة الحرارة</span> </button> <button class="tool-button disabled" data-tool="tint" data-icon="💧" data-label="الصبغة"> <span class="tool-icon">💧</span> <span>الصبغة</span> </button> <button class="tool-button disabled" data-tool="exposure" data-icon="📸" data-label="التعريض"> <span class="tool-icon">📸</span> <span>التعريض</span> </button> <button class="tool-button disabled" data-tool="highlights" data-icon="💡" data-label="الإضاءات"> <span class="tool-icon">💡</span> <span>الإضاءات</span> </button> <button class="tool-button disabled" data-tool="shadows" data-icon="🌑" data-label="الظلال"> <span class="tool-icon">🌑</span> <span>الظلال</span> </button> <button class="tool-button disabled" data-tool="vibrance" data-icon="✨" data-label="الحيوية"> <span class="tool-icon">✨</span> <span>الحيوية</span> </button>
-     </div><!-- Sharpness Tools -->
-     <h3 class="category-title">🔍 أدوات التوضيح (5 أدوات)</h3>
-     <div class="tools-grid"><button class="tool-button disabled" data-tool="sharpen" data-icon="🔍" data-label="التوضيح"> <span class="tool-icon">🔍</span> <span>التوضيح</span> </button> <button class="tool-button disabled" data-tool="blur" data-icon="💫" data-label="الضبابية"> <span class="tool-icon">💫</span> <span>الضبابية</span> </button> <button class="tool-button disabled" data-tool="noise" data-icon="📡" data-label="تقليل التشويش"> <span class="tool-icon">📡</span> <span>تقليل التشويش</span> </button> <button class="tool-button disabled" data-tool="clarity" data-icon="💎" data-label="الوضوح"> <span class="tool-icon">💎</span> <span>الوضوح</span> </button> <button class="tool-button disabled" data-tool="enhancedclarity" data-icon="💠" data-label="الوضوح المحسّن"> <span class="tool-icon">💠</span> <span>الوضوح المحسّن</span> </button>
-     </div><!-- Professional Filters -->
-     <h3 class="category-title">🎭 فلاتر احترافية (15 فلتر)</h3>
-     <div class="tools-grid"><button class="tool-button disabled" data-tool="grayscale" data-icon="⚫" data-label="أبيض وأسود"> <span class="tool-icon">⚫</span> <span>أبيض وأسود</span> </button> <button class="tool-button disabled" data-tool="sepia" data-icon="🟤" data-label="سيبيا"> <span class="tool-icon">🟤</span> <span>سيبيا</span> </button> <button class="tool-button disabled" data-tool="invert" data-icon="🔄" data-label="عكس الألوان"> <span class="tool-icon">🔄</span> <span>عكس الألوان</span> </button> <button class="tool-button disabled" data-tool="vintage" data-icon="📷" data-label="فينتاج"> <span class="tool-icon">📷</span> <span>فينتاج</span> </button> <button class="tool-button disabled" data-tool="warm" data-icon="🔥" data-label="دافئ"> <span class="tool-icon">🔥</span> <span>دافئ</span> </button> <button class="tool-button disabled" data-tool="cool" data-icon="❄️" data-label="بارد"> <span class="tool-icon">❄️</span> <span>بارد</span> </button> <button class="tool-button disabled" data-tool="dramatic" data-icon="🎭" data-label="درامي"> <span class="tool-icon">🎭</span> <span>درامي</span> </button> <button class="tool-button disabled" data-tool="vivid" data-icon="🌺" data-label="حيوي"> <span class="tool-icon">🌺</span> <span>حيوي</span> </button> <button class="tool-button disabled" data-tool="soft" data-icon="🌸" data-label="ناعم"> <span class="tool-icon">🌸</span> <span>ناعم</span> </button> <button class="tool-button disabled" data-tool="hdr" data-icon="🌅" data-label="HDR"> <span class="tool-icon">🌅</span> <span>HDR</span> </button> <button class="tool-button disabled" data-tool="neon" data-icon="💡" data-label="نيون"> <span class="tool-icon">💡</span> <span>نيون</span> </button> <button class="tool-button disabled" data-tool="vignette" data-icon="⭕" data-label="فينييت"> <span class="tool-icon">⭕</span> <span>فينييت</span> </button> <button class="tool-button disabled" data-tool="grain" data-icon="🌾" data-label="حبيبات الفيلم"> <span class="tool-icon">🌾</span> <span>حبيبات الفيلم</span> </button> <button class="tool-button disabled" data-tool="fade" data-icon="🌫️" data-label="بهتان"> <span class="tool-icon">🌫️</span> <span>بهتان</span> </button> <button class="tool-button disabled" data-tool="glow" data-icon="✨" data-label="توهج"> <span class="tool-icon">✨</span> <span>توهج</span> </button>
-     </div><!-- Artistic Effects -->
-     <h3 class="category-title">🖌️ تأثيرات فنية (8 تأثيرات)</h3>
-     <div class="tools-grid"><button class="tool-button disabled" data-tool="posterize" data-icon="🎨" data-label="بوستر"> <span class="tool-icon">🎨</span> <span>بوستر</span> </button> <button class="tool-button disabled" data-tool="pixelate" data-icon="🟦" data-label="بكسل"> <span class="tool-icon">🟦</span> <span>بكسل</span> </button> <button class="tool-button disabled" data-tool="emboss" data-icon="🗿" data-label="نقش بارز"> <span class="tool-icon">🗿</span> <span>نقش بارز</span> </button> <button class="tool-button disabled" data-tool="edge" data-icon="📐" data-label="كشف الحواف"> <span class="tool-icon">📐</span> <span>كشف الحواف</span> </button> <button class="tool-button disabled" data-tool="sketch" data-icon="✏️" data-label="رسم"> <span class="tool-icon">✏️</span> <span>رسم</span> </button> <button class="tool-button disabled" data-tool="cartoon" data-icon="🎬" data-label="كرتون"> <span class="tool-icon">🎬</span> <span>كرتون</span> </button> <button class="tool-button disabled" data-tool="oil" data-icon="🖌️" data-label="رسم زيتي"> <span class="tool-icon">🖌️</span> <span>رسم زيتي</span> </button> <button class="tool-button disabled" data-tool="watercolor" data-icon="🎨" data-label="ألوان مائية"> <span class="tool-icon">🎨</span> <span>ألوان مائية</span> </button>
-     </div><!-- Additional Effects -->
-     <h3 class="category-title">✨ تأثيرات إضافية (3 تأثيرات)</h3>
-     <div class="tools-grid"><button class="tool-button disabled" data-tool="shadow" data-icon="🌓" data-label="ظل"> <span class="tool-icon">🌓</span> <span>ظل</span> </button> <button class="tool-button disabled" data-tool="frame" data-icon="🖼️" data-label="إطار"> <span class="tool-icon">🖼️</span> <span>إطار</span> </button> <button class="tool-button disabled" data-tool="gloweffect" data-icon="🌟" data-label="توهج محسّن"> <span class="tool-icon">🌟</span> <span>توهج محسّن</span> </button>
+     <h2 class="section-title">🎨 50+ أداة تحرير احترافية</h2><!-- Tabs Navigation -->
+     <div class="tabs-container">
+      <div class="tabs-scroll"><button class="tab-button active" data-category="transform"> <span class="tab-icon">🔄</span> <span class="tab-label">التحويل</span> <span class="tab-count">9</span> </button> <button class="tab-button" data-category="lighting"> <span class="tab-icon">💡</span> <span class="tab-label">الإضاءة</span> <span class="tab-count">10</span> </button> <button class="tab-button" data-category="sharpness"> <span class="tab-icon">🔍</span> <span class="tab-label">التوضيح</span> <span class="tab-count">5</span> </button> <button class="tab-button" data-category="filters"> <span class="tab-icon">🎭</span> <span class="tab-label">الفلاتر</span> <span class="tab-count">15</span> </button> <button class="tab-button" data-category="artistic"> <span class="tab-icon">🖌️</span> <span class="tab-label">فني</span> <span class="tab-count">8</span> </button> <button class="tab-button" data-category="effects"> <span class="tab-icon">✨</span> <span class="tab-label">تأثيرات</span> <span class="tab-count">3</span> </button>
+      </div>
+     </div><!-- Tools Content -->
+     <div class="tools-content"><!-- Transform Tools -->
+      <div class="tools-panel active" data-panel="transform">
+       <div class="tools-scroll"><button class="tool-button disabled" data-tool="rotate" data-icon="🔄" data-label="تدوير"> <span class="tool-icon">🔄</span> <span>تدوير</span> </button> <button class="tool-button disabled" data-tool="fliph" data-icon="↔️" data-label="قلب أفقي"> <span class="tool-icon">↔️</span> <span>قلب أفقي</span> </button> <button class="tool-button disabled" data-tool="flipv" data-icon="↕️" data-label="قلب عمودي"> <span class="tool-icon">↕️</span> <span>قلب عمودي</span> </button> <button class="tool-button disabled" data-tool="mirror" data-icon="🪞" data-label="مرآة"> <span class="tool-icon">🪞</span> <span>مرآة</span> </button> <button class="tool-button disabled" data-tool="kaleidoscope" data-icon="🔮" data-label="كاليدوسكوب"> <span class="tool-icon">🔮</span> <span>كاليدوسكوب</span> </button> <button class="tool-button disabled" data-tool="fisheye" data-icon="🐟" data-label="عين السمكة"> <span class="tool-icon">🐟</span> <span>عين السمكة</span> </button> <button class="tool-button disabled" data-tool="bulge" data-icon="🎈" data-label="انتفاخ"> <span class="tool-icon">🎈</span> <span>انتفاخ</span> </button> <button class="tool-button disabled" data-tool="pinch" data-icon="🤏" data-label="قرص"> <span class="tool-icon">🤏</span> <span>قرص</span> </button> <button class="tool-button disabled" data-tool="swirl" data-icon="🌀" data-label="دوامة"> <span class="tool-icon">🌀</span> <span>دوامة</span> </button>
+       </div>
+      </div><!-- Lighting & Color Tools -->
+      <div class="tools-panel" data-panel="lighting">
+       <div class="tools-scroll"><button class="tool-button disabled" data-tool="brightness" data-icon="☀️" data-label="السطوع"> <span class="tool-icon">☀️</span> <span id="brightnessText">السطوع</span> </button> <button class="tool-button disabled" data-tool="contrast" data-icon="◐" data-label="التباين"> <span class="tool-icon">◐</span> <span id="contrastText">التباين</span> </button> <button class="tool-button disabled" data-tool="saturation" data-icon="🌈" data-label="التشبع"> <span class="tool-icon">🌈</span> <span id="saturationText">التشبع</span> </button> <button class="tool-button disabled" data-tool="hue" data-icon="🎨" data-label="تدوير اللون"> <span class="tool-icon">🎨</span> <span>تدوير اللون</span> </button> <button class="tool-button disabled" data-tool="temperature" data-icon="🌡️" data-label="درجة الحرارة"> <span class="tool-icon">🌡️</span> <span>درجة الحرارة</span> </button> <button class="tool-button disabled" data-tool="tint" data-icon="💧" data-label="الصبغة"> <span class="tool-icon">💧</span> <span>الصبغة</span> </button> <button class="tool-button disabled" data-tool="exposure" data-icon="📸" data-label="التعريض"> <span class="tool-icon">📸</span> <span>التعريض</span> </button> <button class="tool-button disabled" data-tool="highlights" data-icon="💡" data-label="الإضاءات"> <span class="tool-icon">💡</span> <span>الإضاءات</span> </button> <button class="tool-button disabled" data-tool="shadows" data-icon="🌑" data-label="الظلال"> <span class="tool-icon">🌑</span> <span>الظلال</span> </button> <button class="tool-button disabled" data-tool="vibrance" data-icon="✨" data-label="الحيوية"> <span class="tool-icon">✨</span> <span>الحيوية</span> </button>
+       </div>
+      </div><!-- Sharpness Tools -->
+      <div class="tools-panel" data-panel="sharpness">
+       <div class="tools-scroll"><button class="tool-button disabled" data-tool="sharpen" data-icon="🔍" data-label="التوضيح"> <span class="tool-icon">🔍</span> <span>التوضيح</span> </button> <button class="tool-button disabled" data-tool="blur" data-icon="💫" data-label="الضبابية"> <span class="tool-icon">💫</span> <span>الضبابية</span> </button> <button class="tool-button disabled" data-tool="noise" data-icon="📡" data-label="تقليل التشويش"> <span class="tool-icon">📡</span> <span>تقليل التشويش</span> </button> <button class="tool-button disabled" data-tool="clarity" data-icon="💎" data-label="الوضوح"> <span class="tool-icon">💎</span> <span>الوضوح</span> </button> <button class="tool-button disabled" data-tool="enhancedclarity" data-icon="💠" data-label="الوضوح المحسّن"> <span class="tool-icon">💠</span> <span>الوضوح المحسّن</span> </button>
+       </div>
+      </div><!-- Professional Filters -->
+      <div class="tools-panel" data-panel="filters">
+       <div class="tools-scroll"><button class="tool-button disabled" data-tool="grayscale" data-icon="⚫" data-label="أبيض وأسود"> <span class="tool-icon">⚫</span> <span>أبيض وأسود</span> </button> <button class="tool-button disabled" data-tool="sepia" data-icon="🟤" data-label="سيبيا"> <span class="tool-icon">🟤</span> <span>سيبيا</span> </button> <button class="tool-button disabled" data-tool="invert" data-icon="🔄" data-label="عكس الألوان"> <span class="tool-icon">🔄</span> <span>عكس الألوان</span> </button> <button class="tool-button disabled" data-tool="vintage" data-icon="📷" data-label="فينتاج"> <span class="tool-icon">📷</span> <span>فينتاج</span> </button> <button class="tool-button disabled" data-tool="warm" data-icon="🔥" data-label="دافئ"> <span class="tool-icon">🔥</span> <span>دافئ</span> </button> <button class="tool-button disabled" data-tool="cool" data-icon="❄️" data-label="بارد"> <span class="tool-icon">❄️</span> <span>بارد</span> </button> <button class="tool-button disabled" data-tool="dramatic" data-icon="🎭" data-label="درامي"> <span class="tool-icon">🎭</span> <span>درامي</span> </button> <button class="tool-button disabled" data-tool="vivid" data-icon="🌺" data-label="حيوي"> <span class="tool-icon">🌺</span> <span>حيوي</span> </button> <button class="tool-button disabled" data-tool="soft" data-icon="🌸" data-label="ناعم"> <span class="tool-icon">🌸</span> <span>ناعم</span> </button> <button class="tool-button disabled" data-tool="hdr" data-icon="🌅" data-label="HDR"> <span class="tool-icon">🌅</span> <span>HDR</span> </button> <button class="tool-button disabled" data-tool="neon" data-icon="💡" data-label="نيون"> <span class="tool-icon">💡</span> <span>نيون</span> </button> <button class="tool-button disabled" data-tool="vignette" data-icon="⭕" data-label="فينييت"> <span class="tool-icon">⭕</span> <span>فينييت</span> </button> <button class="tool-button disabled" data-tool="grain" data-icon="🌾" data-label="حبيبات الفيلم"> <span class="tool-icon">🌾</span> <span>حبيبات الفيلم</span> </button> <button class="tool-button disabled" data-tool="fade" data-icon="🌫️" data-label="بهتان"> <span class="tool-icon">🌫️</span> <span>بهتان</span> </button> <button class="tool-button disabled" data-tool="glow" data-icon="✨" data-label="توهج"> <span class="tool-icon">✨</span> <span>توهج</span> </button>
+       </div>
+      </div><!-- Artistic Effects -->
+      <div class="tools-panel" data-panel="artistic">
+       <div class="tools-scroll"><button class="tool-button disabled" data-tool="posterize" data-icon="🎨" data-label="بوستر"> <span class="tool-icon">🎨</span> <span>بوستر</span> </button> <button class="tool-button disabled" data-tool="pixelate" data-icon="🟦" data-label="بكسل"> <span class="tool-icon">🟦</span> <span>بكسل</span> </button> <button class="tool-button disabled" data-tool="emboss" data-icon="🗿" data-label="نقش بارز"> <span class="tool-icon">🗿</span> <span>نقش بارز</span> </button> <button class="tool-button disabled" data-tool="edge" data-icon="📐" data-label="كشف الحواف"> <span class="tool-icon">📐</span> <span>كشف الحواف</span> </button> <button class="tool-button disabled" data-tool="sketch" data-icon="✏️" data-label="رسم"> <span class="tool-icon">✏️</span> <span>رسم</span> </button> <button class="tool-button disabled" data-tool="cartoon" data-icon="🎬" data-label="كرتون"> <span class="tool-icon">🎬</span> <span>كرتون</span> </button> <button class="tool-button disabled" data-tool="oil" data-icon="🖌️" data-label="رسم زيتي"> <span class="tool-icon">🖌️</span> <span>رسم زيتي</span> </button> <button class="tool-button disabled" data-tool="watercolor" data-icon="🎨" data-label="ألوان مائية"> <span class="tool-icon">🎨</span> <span>ألوان مائية</span> </button>
+       </div>
+      </div><!-- Additional Effects -->
+      <div class="tools-panel" data-panel="effects">
+       <div class="tools-scroll"><button class="tool-button disabled" data-tool="shadow" data-icon="🌓" data-label="ظل"> <span class="tool-icon">🌓</span> <span>ظل</span> </button> <button class="tool-button disabled" data-tool="frame" data-icon="🖼️" data-label="إطار"> <span class="tool-icon">🖼️</span> <span>إطار</span> </button> <button class="tool-button disabled" data-tool="gloweffect" data-icon="🌟" data-label="توهج محسّن"> <span class="tool-icon">🌟</span> <span>توهج محسّن</span> </button>
+       </div>
+      </div>
      </div><!-- Action Buttons -->
      <div class="action-buttons"><button class="action-button btn-reset-all disabled" id="resetAllButton"> <span>🔄</span> <span>إعادة تعيين الكل</span> </button> <button class="action-button btn-save disabled" id="saveButton"> <span>💾</span> <span id="saveText">حفظ الصورة</span> </button> <button class="action-button btn-share disabled" id="shareButton"> <span>📤</span> <span>مشاركة الصورة</span> </button>
      </div>
@@ -647,7 +830,6 @@
             uploadButtonText: document.getElementById('uploadButtonText'),
             fileInput: document.getElementById('fileInput'),
             imageDisplay: document.getElementById('imageDisplay'),
-            toolButtons: document.querySelectorAll('.tool-button'),
             resetAllButton: document.getElementById('resetAllButton'),
             saveButton: document.getElementById('saveButton'),
             shareButton: document.getElementById('shareButton'),
@@ -820,10 +1002,33 @@
         }
 
         function enableTools() {
-            elements.toolButtons.forEach(btn => btn.classList.remove('disabled'));
+            document.querySelectorAll('.tool-button').forEach(btn => btn.classList.remove('disabled'));
             elements.saveButton.classList.remove('disabled');
             elements.shareButton.classList.remove('disabled');
             elements.resetAllButton.classList.remove('disabled');
+        }
+
+        // Tab switching functionality
+        function initTabs() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const toolsPanels = document.querySelectorAll('.tools-panel');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const category = button.dataset.category;
+                    
+                    // Update active tab
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    // Update active panel
+                    toolsPanels.forEach(panel => panel.classList.remove('active'));
+                    const activePanel = document.querySelector(`[data-panel="${category}"]`);
+                    if (activePanel) {
+                        activePanel.classList.add('active');
+                    }
+                });
+            });
         }
 
         function displayImage(file) {
@@ -867,14 +1072,12 @@
                 </div>
                 <div class="control-buttons">
                     <button class="control-btn btn-reset" id="resetBtn">إعادة تعيين</button>
-                    <button class="control-btn btn-apply" id="applyBtn">تطبيق</button>
                 </div>
             `;
             
             const slider = document.getElementById('toolSlider');
             const sliderValue = document.getElementById('sliderValue');
             const resetBtn = document.getElementById('resetBtn');
-            const applyBtn = document.getElementById('applyBtn');
             
             slider.addEventListener('input', (e) => {
                 let value = parseFloat(e.target.value);
@@ -892,15 +1095,13 @@
             resetBtn.addEventListener('click', () => {
                 imageFilters[tool] = config.default;
                 slider.value = config.default;
-                sliderValue.textContent = `${config.default}${config.unit}`;
+                if (tool === 'fliph' || tool === 'flipv') {
+                    sliderValue.textContent = config.default === 1 ? 'عادي' : 'مقلوب';
+                } else {
+                    sliderValue.textContent = `${config.default}${config.unit}`;
+                }
                 applyFilters();
                 showToast('🔄 تم إعادة التعيين');
-            });
-            
-            applyBtn.addEventListener('click', () => {
-                elements.controlPanel.classList.remove('active');
-                document.querySelectorAll('.tool-button').forEach(btn => btn.classList.remove('active'));
-                showToast('✅ تم تطبيق التعديلات');
             });
             
             elements.controlPanel.classList.add('active');
@@ -1081,6 +1282,9 @@
             }
         }
 
+        // Initialize tabs
+        initTabs();
+
         elements.uploadButton.addEventListener('click', () => {
             elements.fileInput.click();
         });
@@ -1091,19 +1295,25 @@
             }
         });
 
-        elements.toolButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                if (button.classList.contains('disabled')) return;
-                
-                const tool = button.dataset.tool;
-                const icon = button.dataset.icon;
-                const label = button.dataset.label;
-                
-                document.querySelectorAll('.tool-button').forEach(btn => btn.classList.remove('active'));
+        // Tool button click handlers (delegated to handle dynamically loaded buttons)
+        document.addEventListener('click', (e) => {
+            const button = e.target.closest('.tool-button');
+            if (!button || button.classList.contains('disabled')) return;
+            
+            const tool = button.dataset.tool;
+            const icon = button.dataset.icon;
+            const label = button.dataset.label;
+            
+            // Close any open panel first
+            const wasActive = button.classList.contains('active');
+            document.querySelectorAll('.tool-button').forEach(btn => btn.classList.remove('active'));
+            
+            if (wasActive) {
+                closeControlPanel();
+            } else {
                 button.classList.add('active');
-                
                 openControlPanel(tool, icon, label);
-            });
+            }
         });
 
         elements.closeControl.addEventListener('click', closeControlPanel);
@@ -1179,5 +1389,5 @@
 
         onConfigChange(defaultConfig);
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99a99b2572dc794b',t:'MTc2MjQ4NDY5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99a9bef25643794b',t:'MTc2MjQ4NjE2Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
