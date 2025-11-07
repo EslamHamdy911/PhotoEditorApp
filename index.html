@@ -2,782 +2,731 @@
 <html lang="ar" dir="rtl">
  <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>محرر الصور</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>محرر الصور الاحترافي</title>
   <script src="/_sdk/element_sdk.js"></script>
   <style>
-    body {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      height: 100%;
-      overflow: hidden;
-    }
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
 
-    html {
-      height: 100%;
-    }
+        html {
+            height: 100%;
+        }
 
-    * {
-      box-sizing: border-box;
-    }
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-    .app-container {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
+        .app-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
 
-    /* شاشة البداية */
-    .splash-screen {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      animation: fadeOut 0.5s ease-in-out 2s forwards;
-    }
+        /* Header */
+        .app-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    @keyframes fadeOut {
-      to {
-        opacity: 0;
-        visibility: hidden;
-      }
-    }
+        .app-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
 
-    .logo-container {
-      text-align: center;
-      animation: scaleIn 0.6s ease-out;
-    }
+        /* Photo Display Area */
+        .photo-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            overflow: hidden;
+        }
 
-    @keyframes scaleIn {
-      from {
-        transform: scale(0.5);
-        opacity: 0;
-      }
-      to {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
+        .photo-canvas {
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 1;
+            background: #0f3460;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
 
-    .logo-icon {
-      width: 120px;
-      height: 120px;
-      margin-bottom: 20px;
-      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
-    }
+        .photo-canvas img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
 
-    .logo-text {
-      font-size: 48px;
-      font-weight: bold;
-      margin: 0;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+        .placeholder {
+            text-align: center;
+            color: #94a3b8;
+        }
 
-    .logo-tagline {
-      font-size: 18px;
-      margin-top: 10px;
-      opacity: 0.8;
-    }
+        .placeholder-icon {
+            font-size: 64px;
+            margin-bottom: 10px;
+            opacity: 0.6;
+        }
 
-    /* الشاشة الرئيسية */
-    .main-screen {
-      display: none;
-      flex-direction: column;
-      height: 100%;
-      animation: fadeIn 0.5s ease-in-out;
-    }
+        .placeholder-text {
+            font-size: 16px;
+            font-weight: 500;
+        }
 
-    .main-screen.active {
-      display: flex;
-    }
+        /* Action Buttons */
+        .action-bar {
+            background: #16213e;
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+        }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
+        .action-btn {
+            flex: 1;
+            max-width: 120px;
+            padding: 15px 10px;
+            border: none;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            color: white;
+        }
 
-    .header {
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 2px solid rgba(255,255,255,0.1);
-    }
+        .action-btn:active {
+            transform: scale(0.95);
+        }
 
-    .header-title {
-      font-size: 24px;
-      font-weight: bold;
-      margin: 0;
-    }
+        .btn-icon {
+            font-size: 28px;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+        }
 
-    .settings-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 10px;
-      border-radius: 50%;
-      transition: all 0.3s ease;
-    }
+        .btn-upload {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
 
-    .settings-btn:hover {
-      transform: rotate(90deg);
-    }
+        .btn-camera {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
 
-    .content {
-      flex: 1;
-      padding: 30px 20px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
+        .btn-save {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
 
-    .image-preview {
-      width: 100%;
-      height: 250px;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 10px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    }
+        .btn-share {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
 
-    .preview-placeholder {
-      font-size: 64px;
-      opacity: 0.3;
-    }
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
 
-    .action-buttons {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
+        /* Edit Tools Panel */
+        .tools-panel {
+            background: #0f3460;
+            padding: 15px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
 
-    @media (max-width: 480px) {
-      .action-buttons {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
+        .tools-panel::-webkit-scrollbar {
+            display: none;
+        }
 
-    .action-btn {
-      padding: 20px;
-      border: none;
-      border-radius: 15px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
+        .tools-grid {
+            display: inline-flex;
+            gap: 12px;
+            padding: 5px 0;
+        }
 
-    .action-btn:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
+        .tool-btn {
+            min-width: 80px;
+            padding: 12px 15px;
+            border: 2px solid #1a1a2e;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: #94a3b8;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
 
-    .action-btn:active {
-      transform: translateY(-2px);
-    }
+        .tool-btn:active {
+            transform: scale(0.95);
+        }
 
-    .btn-icon {
-      font-size: 32px;
-    }
+        .tool-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
 
-    .save-btn {
-      grid-column: 1 / -1;
-      font-size: 18px;
-    }
+        .tool-icon {
+            font-size: 24px;
+        }
 
-    .share-btn {
-      grid-column: 1 / -1;
-      font-size: 18px;
-    }
+        /* Adjustment Sliders */
+        .adjustment-panel {
+            background: #16213e;
+            padding: 20px 15px;
+            display: none;
+            animation: slideUp 0.3s ease;
+        }
 
-    /* صفحة الإعدادات */
-    .settings-screen {
-      display: none;
-      flex-direction: column;
-      height: 100%;
-      animation: slideIn 0.3s ease-out;
-    }
+        .adjustment-panel.active {
+            display: block;
+        }
 
-    .settings-screen.active {
-      display: flex;
-    }
+        .slider-group {
+            margin-bottom: 20px;
+        }
 
-    @keyframes slideIn {
-      from {
-        transform: translateX(-100%);
-      }
-      to {
-        transform: translateX(0);
-      }
-    }
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            color: #94a3b8;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
 
-    .settings-header {
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      border-bottom: 2px solid rgba(255,255,255,0.1);
-    }
+        .slider-value {
+            color: #667eea;
+        }
 
-    .back-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 10px;
-      border-radius: 50%;
-      transition: all 0.3s ease;
-      font-size: 24px;
-    }
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 5px;
+            background: #0f3460;
+            outline: none;
+            -webkit-appearance: none;
+        }
 
-    .back-btn:hover {
-      transform: translateX(5px);
-    }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+        }
 
-    .settings-title {
-      font-size: 24px;
-      font-weight: bold;
-      margin: 0;
-    }
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+        }
 
-    .settings-content {
-      flex: 1;
-      padding: 20px;
-      overflow-y: auto;
-    }
+        input[type="file"] {
+            display: none;
+        }
 
-    .setting-item {
-      padding: 20px;
-      border-radius: 15px;
-      margin-bottom: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: all 0.3s ease;
-    }
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
 
-    .setting-item:hover {
-      transform: translateX(-5px);
-    }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
 
-    .setting-label {
-      font-size: 16px;
-      font-weight: 500;
-    }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    .toggle-switch {
-      width: 50px;
-      height: 26px;
-      background: rgba(255,255,255,0.2);
-      border-radius: 13px;
-      position: relative;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
+        /* Reset Button */
+        .reset-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+            transition: all 0.3s ease;
+        }
 
-    .toggle-switch.active {
-      background: #4CAF50;
-    }
-
-    .toggle-slider {
-      width: 22px;
-      height: 22px;
-      background: white;
-      border-radius: 50%;
-      position: absolute;
-      top: 2px;
-      right: 2px;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-
-    .toggle-switch.active .toggle-slider {
-      right: 26px;
-    }
-
-    .select-wrapper {
-      position: relative;
-    }
-
-    .custom-select {
-      padding: 8px 35px 8px 15px;
-      border-radius: 10px;
-      border: none;
-      font-size: 14px;
-      cursor: pointer;
-      appearance: none;
-      min-width: 120px;
-    }
-
-    .select-arrow {
-      position: absolute;
-      left: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-    }
-
-    /* Toast notification */
-    .toast {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      padding: 15px 30px;
-      border-radius: 10px;
-      font-weight: 500;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-      opacity: 0;
-      transition: all 0.3s ease;
-      z-index: 1000;
-    }
-
-    .toast.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
-  </style>
+        .reset-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
   <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
  </head>
  <body>
-  <div class="app-container"><!-- شاشة البداية -->
-   <div class="splash-screen" id="splashScreen">
-    <div class="logo-container">
-     <svg class="logo-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs>
-       <lineargradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
-        <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
-       </lineargradient>
-      </defs> <rect x="10" y="10" width="80" height="80" rx="15" fill="url(#logoGradient)" /> <circle cx="35" cy="35" r="8" fill="white" opacity="0.9" /> <path d="M 25 60 Q 50 40, 75 60 L 75 80 Q 75 85, 70 85 L 30 85 Q 25 85, 25 80 Z" fill="white" opacity="0.9" />
-     </svg>
-     <h1 class="logo-text" id="logoText">PhotoEdit</h1>
-     <p class="logo-tagline" id="logoTagline">حرر صورك بإبداع</p>
-    </div>
-   </div><!-- الشاشة الرئيسية -->
-   <div class="main-screen" id="mainScreen">
-    <div class="header">
-     <h2 class="header-title" id="headerTitle">محرر الصور</h2><button class="settings-btn" id="settingsBtn" aria-label="الإعدادات">
-      <svg width="28" height="28" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3" /> <path d="M12 1v6m0 6v6m9-9h-6m-6 0H3" />
-      </svg></button>
-    </div>
-    <div class="content">
-     <div class="image-preview" id="imagePreview">
-      <div class="preview-placeholder">
+  <div class="app-container"><!-- Header -->
+   <header class="app-header">
+    <h1 class="app-title" id="appTitle">📸 محرر الصور الاحترافي</h1>
+   </header><!-- Photo Display -->
+   <section class="photo-section">
+    <div class="photo-canvas" id="photoCanvas">
+     <div class="placeholder">
+      <div class="placeholder-icon">
        🖼️
       </div>
-     </div>
-     <div class="action-buttons"><button class="action-btn" id="cropBtn"> <span class="btn-icon">✂️</span> <span id="cropBtnText">قص الصورة</span> </button> <button class="action-btn" id="rotateBtn"> <span class="btn-icon">🔄</span> <span id="rotateBtnText">تدوير</span> </button> <button class="action-btn" id="resizeBtn"> <span class="btn-icon">📏</span> <span id="resizeBtnText">تغيير الحجم</span> </button> <button class="action-btn" id="brightnessBtn"> <span class="btn-icon">☀️</span> <span id="brightnessBtnText">السطوع</span> </button> <button class="action-btn" id="contrastBtn"> <span class="btn-icon">🌗</span> <span id="contrastBtnText">التباين</span> </button> <button class="action-btn" id="saturationBtn"> <span class="btn-icon">🌈</span> <span id="saturationBtnText">التشبع</span> </button> <button class="action-btn" id="filtersBtn"> <span class="btn-icon">🎨</span> <span id="filtersBtnText">الفلاتر</span> </button> <button class="action-btn" id="textBtn"> <span class="btn-icon">📝</span> <span id="textBtnText">النصوص</span> </button> <button class="action-btn" id="stickersBtn"> <span class="btn-icon">😊</span> <span id="stickersBtnText">الملصقات</span> </button> <button class="action-btn" id="frameBtn"> <span class="btn-icon">🖼️</span> <span id="frameBtnText">الإطارات</span> </button> <button class="action-btn" id="blurBtn"> <span class="btn-icon">🌫️</span> <span id="blurBtnText">التمويه</span> </button> <button class="action-btn" id="sharpenBtn"> <span class="btn-icon">🔍</span> <span id="sharpenBtnText">التوضيح</span> </button> <button class="action-btn" id="backgroundBtn"> <span class="btn-icon">🏞️</span> <span id="backgroundBtnText">الخلفية</span> </button> <button class="action-btn" id="effectsBtn"> <span class="btn-icon">✨</span> <span id="effectsBtnText">التأثيرات</span> </button> <button class="action-btn" id="undoBtn"> <span class="btn-icon">↶</span> <span id="undoBtnText">تراجع</span> </button> <button class="action-btn" id="redoBtn"> <span class="btn-icon">↷</span> <span id="redoBtnText">إعادة</span> </button> <button class="action-btn save-btn" id="saveBtn"> <span class="btn-icon">💾</span> <span id="saveBtnText">الحفظ</span> </button> <button class="action-btn share-btn" id="shareBtn"> <span class="btn-icon">📤</span> <span id="shareBtnText">مشاركة</span> </button>
-     </div>
-    </div>
-   </div><!-- صفحة الإعدادات -->
-   <div class="settings-screen" id="settingsScreen">
-    <div class="settings-header"><button class="back-btn" id="backBtn" aria-label="رجوع">←</button>
-     <h2 class="settings-title" id="settingsTitle">الإعدادات</h2>
-    </div>
-    <div class="settings-content">
-     <div class="setting-item" id="languageSetting"><span class="setting-label" id="languageLabel">اللغة</span>
-      <div class="select-wrapper"><select class="custom-select" id="languageSelect"> <option value="ar">العربية</option> <option value="en">English</option> <option value="fr">Français</option> </select> <span class="select-arrow">▼</span>
-      </div>
-     </div>
-     <div class="setting-item" id="qualitySetting"><span class="setting-label" id="qualityLabel">جودة الحفظ</span>
-      <div class="select-wrapper"><select class="custom-select" id="qualitySelect"> <option value="high">عالية</option> <option value="medium">متوسطة</option> <option value="low">منخفضة</option> </select> <span class="select-arrow">▼</span>
-      </div>
-     </div>
-     <div class="setting-item" id="notificationsSetting"><span class="setting-label" id="notificationsLabel">الإشعارات</span>
-      <div class="toggle-switch active" id="notificationsToggle">
-       <div class="toggle-slider"></div>
+      <div class="placeholder-text">
+       اختر صورة للبدء
       </div>
      </div>
     </div>
-   </div><!-- Toast notification -->
-   <div class="toast" id="toast"></div>
-  </div>
+   </section><!-- Edit Tools -->
+   <div class="tools-panel">
+    <div class="tools-grid"><button class="tool-btn" data-tool="filters"> <span class="tool-icon">🎨</span> <span>فلاتر</span> </button> <button class="tool-btn" data-tool="adjust"> <span class="tool-icon">⚙️</span> <span>ضبط</span> </button> <button class="tool-btn" data-tool="brightness"> <span class="tool-icon">☀️</span> <span>إضاءة</span> </button> <button class="tool-btn" data-tool="contrast"> <span class="tool-icon">◐</span> <span>تباين</span> </button> <button class="tool-btn" data-tool="saturation"> <span class="tool-icon">🌈</span> <span>تشبع</span> </button> <button class="tool-btn" data-tool="blur"> <span class="tool-icon">💫</span> <span>ضبابية</span> </button> <button class="tool-btn" data-tool="rotate"> <span class="tool-icon">🔄</span> <span>تدوير</span> </button> <button class="tool-btn" data-tool="flip"> <span class="tool-icon">↔️</span> <span>قلب</span> </button>
+    </div>
+   </div><!-- Adjustment Panel -->
+   <div class="adjustment-panel" id="adjustmentPanel">
+    <div class="slider-group">
+     <div class="slider-label"><span id="currentToolLabel">السطوع</span> <span class="slider-value" id="sliderValue">100%</span>
+     </div><input type="range" id="adjustmentSlider" min="0" max="200" value="100">
+    </div><button class="reset-btn" id="resetBtn">🔄 إعادة تعيين الكل</button>
+   </div><!-- Action Buttons -->
+   <div class="action-bar"><button class="action-btn btn-upload" id="uploadBtn"> <span class="btn-icon">📁</span> <span id="uploadBtnText">رفع صورة</span> </button> <button class="action-btn btn-camera" id="cameraBtn"> <span class="btn-icon">📷</span> <span id="cameraBtnText">كاميرا</span> </button> <button class="action-btn btn-save" id="saveBtn" disabled> <span class="btn-icon">💾</span> <span id="saveBtnText">حفظ</span> </button> <button class="action-btn btn-share" id="shareBtn" disabled> <span class="btn-icon">📤</span> <span id="shareBtnText">مشاركة</span> </button>
+   </div>
+  </div><input type="file" id="uploadInput" accept="image/*"> <input type="file" id="cameraInput" accept="image/*" capture="environment">
+  <div class="toast" id="toast"></div>
   <script>
-    const defaultConfig = {
-      background_color: "#f0f4ff",
-      surface_color: "#ffffff",
-      text_color: "#2d3748",
-      primary_action_color: "#667eea",
-      secondary_action_color: "#764ba2",
-      app_logo_text: "PhotoEdit",
-      app_tagline: "حرر صورك بإبداع",
-      crop_button_text: "قص الصورة",
-      rotate_button_text: "تدوير",
-      resize_button_text: "تغيير الحجم",
-      brightness_button_text: "السطوع",
-      contrast_button_text: "التباين",
-      saturation_button_text: "التشبع",
-      filters_button_text: "الفلاتر",
-      text_button_text: "النصوص",
-      stickers_button_text: "الملصقات",
-      frame_button_text: "الإطارات",
-      blur_button_text: "التمويه",
-      sharpen_button_text: "التوضيح",
-      background_button_text: "الخلفية",
-      effects_button_text: "التأثيرات",
-      undo_button_text: "تراجع",
-      redo_button_text: "إعادة",
-      save_button_text: "الحفظ",
-      share_button_text: "مشاركة",
-      settings_title: "الإعدادات",
-      language_label: "اللغة",
-      quality_label: "جودة الحفظ",
-      notifications_label: "الإشعارات",
-      font_family: "Segoe UI",
-      font_size: 16
-    };
+        const defaultConfig = {
+            app_title: "📸 محرر الصور الاحترافي",
+            upload_button_text: "رفع صورة",
+            camera_button_text: "كاميرا",
+            save_button_text: "حفظ",
+            share_button_text: "مشاركة",
+            primary_color: "#667eea",
+            secondary_color: "#764ba2",
+            font_family: "Segoe UI",
+            font_size: 16
+        };
 
-    async function onConfigChange(config) {
-      const baseFontStack = 'Tahoma, Geneva, Verdana, sans-serif';
-      const customFont = config.font_family || defaultConfig.font_family;
-      const baseSize = config.font_size || defaultConfig.font_size;
+        let currentImage = null;
+        let imageFilters = {
+            brightness: 100,
+            contrast: 100,
+            saturation: 100,
+            blur: 0,
+            grayscale: 0,
+            sepia: 0,
+            hueRotate: 0,
+            rotation: 0,
+            flipH: 1,
+            flipV: 1
+        };
 
-      document.body.style.background = config.background_color || defaultConfig.background_color;
-      document.body.style.color = config.text_color || defaultConfig.text_color;
-      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+        const elements = {
+            appTitle: document.getElementById('appTitle'),
+            photoCanvas: document.getElementById('photoCanvas'),
+            uploadBtn: document.getElementById('uploadBtn'),
+            cameraBtn: document.getElementById('cameraBtn'),
+            saveBtn: document.getElementById('saveBtn'),
+            shareBtn: document.getElementById('shareBtn'),
+            uploadBtnText: document.getElementById('uploadBtnText'),
+            cameraBtnText: document.getElementById('cameraBtnText'),
+            saveBtnText: document.getElementById('saveBtnText'),
+            shareBtnText: document.getElementById('shareBtnText'),
+            uploadInput: document.getElementById('uploadInput'),
+            cameraInput: document.getElementById('cameraInput'),
+            toast: document.getElementById('toast'),
+            adjustmentPanel: document.getElementById('adjustmentPanel'),
+            adjustmentSlider: document.getElementById('adjustmentSlider'),
+            sliderValue: document.getElementById('sliderValue'),
+            currentToolLabel: document.getElementById('currentToolLabel'),
+            resetBtn: document.getElementById('resetBtn')
+        };
 
-      const splashScreen = document.getElementById('splashScreen');
-      splashScreen.style.background = `linear-gradient(135deg, ${config.primary_action_color || defaultConfig.primary_action_color} 0%, ${config.secondary_action_color || defaultConfig.secondary_action_color} 100%)`;
+        let currentTool = null;
 
-      const mainScreen = document.getElementById('mainScreen');
-      mainScreen.style.background = config.background_color || defaultConfig.background_color;
+        async function onConfigChange(config) {
+            const finalConfig = { ...defaultConfig, ...config };
+            
+            elements.appTitle.textContent = finalConfig.app_title;
+            elements.uploadBtnText.textContent = finalConfig.upload_button_text;
+            elements.cameraBtnText.textContent = finalConfig.camera_button_text;
+            elements.saveBtnText.textContent = finalConfig.save_button_text;
+            elements.shareBtnText.textContent = finalConfig.share_button_text;
 
-      const header = document.querySelector('.header');
-      header.style.background = config.surface_color || defaultConfig.surface_color;
-      header.style.color = config.text_color || defaultConfig.text_color;
-
-      const settingsBtn = document.getElementById('settingsBtn');
-      settingsBtn.style.background = config.surface_color || defaultConfig.surface_color;
-      settingsBtn.style.color = config.primary_action_color || defaultConfig.primary_action_color;
-
-      const imagePreview = document.getElementById('imagePreview');
-      imagePreview.style.background = `linear-gradient(135deg, ${config.primary_action_color || defaultConfig.primary_action_color}20 0%, ${config.secondary_action_color || defaultConfig.secondary_action_color}20 100%)`;
-      imagePreview.style.color = config.text_color || defaultConfig.text_color;
-
-      const actionButtons = document.querySelectorAll('.action-btn');
-      actionButtons.forEach((btn, index) => {
-        if (index < 4) {
-          btn.style.background = config.surface_color || defaultConfig.surface_color;
-          btn.style.color = config.text_color || defaultConfig.text_color;
+            const baseSize = finalConfig.font_size;
+            const customFont = finalConfig.font_family;
+            const fontStack = `${customFont}, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif`;
+            
+            document.body.style.fontFamily = fontStack;
+            elements.appTitle.style.fontSize = `${baseSize * 1.5}px`;
+            
+            document.querySelectorAll('.action-btn').forEach(btn => {
+                btn.style.fontSize = `${baseSize * 0.8125}px`;
+            });
         }
-      });
 
-      const saveBtn = document.getElementById('saveBtn');
-      saveBtn.style.background = `linear-gradient(135deg, ${config.primary_action_color || defaultConfig.primary_action_color} 0%, ${config.secondary_action_color || defaultConfig.secondary_action_color} 100%)`;
-      saveBtn.style.color = '#ffffff';
-
-      const shareBtn = document.getElementById('shareBtn');
-      shareBtn.style.background = `linear-gradient(135deg, ${config.secondary_action_color || defaultConfig.secondary_action_color} 0%, ${config.primary_action_color || defaultConfig.primary_action_color} 100%)`;
-      shareBtn.style.color = '#ffffff';
-
-      const settingsScreen = document.getElementById('settingsScreen');
-      settingsScreen.style.background = config.background_color || defaultConfig.background_color;
-
-      const settingsHeader = document.querySelector('.settings-header');
-      settingsHeader.style.background = config.surface_color || defaultConfig.surface_color;
-      settingsHeader.style.color = config.text_color || defaultConfig.text_color;
-
-      const backBtn = document.getElementById('backBtn');
-      backBtn.style.color = config.primary_action_color || defaultConfig.primary_action_color;
-
-      const settingItems = document.querySelectorAll('.setting-item');
-      settingItems.forEach(item => {
-        item.style.background = config.surface_color || defaultConfig.surface_color;
-        item.style.color = config.text_color || defaultConfig.text_color;
-      });
-
-      const customSelects = document.querySelectorAll('.custom-select');
-      customSelects.forEach(select => {
-        select.style.background = config.background_color || defaultConfig.background_color;
-        select.style.color = config.text_color || defaultConfig.text_color;
-      });
-
-      const toast = document.getElementById('toast');
-      toast.style.background = config.primary_action_color || defaultConfig.primary_action_color;
-      toast.style.color = '#ffffff';
-
-      document.getElementById('logoText').textContent = config.app_logo_text || defaultConfig.app_logo_text;
-      document.getElementById('logoText').style.fontSize = `${baseSize * 3}px`;
-      
-      document.getElementById('logoTagline').textContent = config.app_tagline || defaultConfig.app_tagline;
-      document.getElementById('logoTagline').style.fontSize = `${baseSize * 1.125}px`;
-      document.getElementById('logoTagline').style.color = '#ffffff';
-
-      document.getElementById('headerTitle').style.fontSize = `${baseSize * 1.5}px`;
-      
-      document.getElementById('cropBtnText').textContent = config.crop_button_text || defaultConfig.crop_button_text;
-      document.getElementById('rotateBtnText').textContent = config.rotate_button_text || defaultConfig.rotate_button_text;
-      document.getElementById('resizeBtnText').textContent = config.resize_button_text || defaultConfig.resize_button_text;
-      document.getElementById('brightnessBtnText').textContent = config.brightness_button_text || defaultConfig.brightness_button_text;
-      document.getElementById('contrastBtnText').textContent = config.contrast_button_text || defaultConfig.contrast_button_text;
-      document.getElementById('saturationBtnText').textContent = config.saturation_button_text || defaultConfig.saturation_button_text;
-      document.getElementById('filtersBtnText').textContent = config.filters_button_text || defaultConfig.filters_button_text;
-      document.getElementById('textBtnText').textContent = config.text_button_text || defaultConfig.text_button_text;
-      document.getElementById('stickersBtnText').textContent = config.stickers_button_text || defaultConfig.stickers_button_text;
-      document.getElementById('frameBtnText').textContent = config.frame_button_text || defaultConfig.frame_button_text;
-      document.getElementById('blurBtnText').textContent = config.blur_button_text || defaultConfig.blur_button_text;
-      document.getElementById('sharpenBtnText').textContent = config.sharpen_button_text || defaultConfig.sharpen_button_text;
-      document.getElementById('backgroundBtnText').textContent = config.background_button_text || defaultConfig.background_button_text;
-      document.getElementById('effectsBtnText').textContent = config.effects_button_text || defaultConfig.effects_button_text;
-      document.getElementById('undoBtnText').textContent = config.undo_button_text || defaultConfig.undo_button_text;
-      document.getElementById('redoBtnText').textContent = config.redo_button_text || defaultConfig.redo_button_text;
-      document.getElementById('saveBtnText').textContent = config.save_button_text || defaultConfig.save_button_text;
-      document.getElementById('shareBtnText').textContent = config.share_button_text || defaultConfig.share_button_text;
-
-      const actionBtnTexts = document.querySelectorAll('.action-btn span:not(.btn-icon)');
-      actionBtnTexts.forEach(text => {
-        text.style.fontSize = `${baseSize}px`;
-      });
-
-      document.getElementById('settingsTitle').textContent = config.settings_title || defaultConfig.settings_title;
-      document.getElementById('settingsTitle').style.fontSize = `${baseSize * 1.5}px`;
-      
-      document.getElementById('languageLabel').textContent = config.language_label || defaultConfig.language_label;
-      document.getElementById('qualityLabel').textContent = config.quality_label || defaultConfig.quality_label;
-      document.getElementById('notificationsLabel').textContent = config.notifications_label || defaultConfig.notifications_label;
-
-      const settingLabels = document.querySelectorAll('.setting-label');
-      settingLabels.forEach(label => {
-        label.style.fontSize = `${baseSize}px`;
-      });
-
-      const selectElements = document.querySelectorAll('.custom-select');
-      selectElements.forEach(select => {
-        select.style.fontSize = `${baseSize * 0.875}px`;
-      });
-    }
-
-    function mapToCapabilities(config) {
-      return {
-        recolorables: [
-          {
-            get: () => config.background_color || defaultConfig.background_color,
-            set: (value) => {
-              config.background_color = value;
-              window.elementSdk.setConfig({ background_color: value });
-            }
-          },
-          {
-            get: () => config.surface_color || defaultConfig.surface_color,
-            set: (value) => {
-              config.surface_color = value;
-              window.elementSdk.setConfig({ surface_color: value });
-            }
-          },
-          {
-            get: () => config.text_color || defaultConfig.text_color,
-            set: (value) => {
-              config.text_color = value;
-              window.elementSdk.setConfig({ text_color: value });
-            }
-          },
-          {
-            get: () => config.primary_action_color || defaultConfig.primary_action_color,
-            set: (value) => {
-              config.primary_action_color = value;
-              window.elementSdk.setConfig({ primary_action_color: value });
-            }
-          },
-          {
-            get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
-            set: (value) => {
-              config.secondary_action_color = value;
-              window.elementSdk.setConfig({ secondary_action_color: value });
-            }
-          }
-        ],
-        borderables: [],
-        fontEditable: {
-          get: () => config.font_family || defaultConfig.font_family,
-          set: (value) => {
-            config.font_family = value;
-            window.elementSdk.setConfig({ font_family: value });
-          }
-        },
-        fontSizeable: {
-          get: () => config.font_size || defaultConfig.font_size,
-          set: (value) => {
-            config.font_size = value;
-            window.elementSdk.setConfig({ font_size: value });
-          }
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.primary_color || defaultConfig.primary_color,
+                        set: (value) => {
+                            if (window.elementSdk) {
+                                window.elementSdk.setConfig({ primary_color: value });
+                            }
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (value) => {
+                        if (window.elementSdk) {
+                            window.elementSdk.setConfig({ font_family: value });
+                        }
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || defaultConfig.font_size,
+                    set: (value) => {
+                        if (window.elementSdk) {
+                            window.elementSdk.setConfig({ font_size: value });
+                        }
+                    }
+                }
+            };
         }
-      };
-    }
 
-    function mapToEditPanelValues(config) {
-      return new Map([
-        ["app_logo_text", config.app_logo_text || defaultConfig.app_logo_text],
-        ["app_tagline", config.app_tagline || defaultConfig.app_tagline],
-        ["crop_button_text", config.crop_button_text || defaultConfig.crop_button_text],
-        ["rotate_button_text", config.rotate_button_text || defaultConfig.rotate_button_text],
-        ["resize_button_text", config.resize_button_text || defaultConfig.resize_button_text],
-        ["brightness_button_text", config.brightness_button_text || defaultConfig.brightness_button_text],
-        ["contrast_button_text", config.contrast_button_text || defaultConfig.contrast_button_text],
-        ["saturation_button_text", config.saturation_button_text || defaultConfig.saturation_button_text],
-        ["filters_button_text", config.filters_button_text || defaultConfig.filters_button_text],
-        ["text_button_text", config.text_button_text || defaultConfig.text_button_text],
-        ["stickers_button_text", config.stickers_button_text || defaultConfig.stickers_button_text],
-        ["frame_button_text", config.frame_button_text || defaultConfig.frame_button_text],
-        ["blur_button_text", config.blur_button_text || defaultConfig.blur_button_text],
-        ["sharpen_button_text", config.sharpen_button_text || defaultConfig.sharpen_button_text],
-        ["background_button_text", config.background_button_text || defaultConfig.background_button_text],
-        ["effects_button_text", config.effects_button_text || defaultConfig.effects_button_text],
-        ["undo_button_text", config.undo_button_text || defaultConfig.undo_button_text],
-        ["redo_button_text", config.redo_button_text || defaultConfig.redo_button_text],
-        ["save_button_text", config.save_button_text || defaultConfig.save_button_text],
-        ["share_button_text", config.share_button_text || defaultConfig.share_button_text],
-        ["settings_title", config.settings_title || defaultConfig.settings_title],
-        ["language_label", config.language_label || defaultConfig.language_label],
-        ["quality_label", config.quality_label || defaultConfig.quality_label],
-        ["notifications_label", config.notifications_label || defaultConfig.notifications_label]
-      ]);
-    }
+        function mapToEditPanelValues(config) {
+            const finalConfig = { ...defaultConfig, ...config };
+            return new Map([
+                ["app_title", finalConfig.app_title],
+                ["upload_button_text", finalConfig.upload_button_text],
+                ["camera_button_text", finalConfig.camera_button_text],
+                ["save_button_text", finalConfig.save_button_text],
+                ["share_button_text", finalConfig.share_button_text]
+            ]);
+        }
 
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig,
-        onConfigChange,
-        mapToCapabilities,
-        mapToEditPanelValues
-      });
-    }
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
 
-    // التنقل بين الشاشات
-    setTimeout(() => {
-      document.getElementById('splashScreen').style.display = 'none';
-      document.getElementById('mainScreen').classList.add('active');
-    }, 2500);
+        function showToast(message) {
+            elements.toast.textContent = message;
+            elements.toast.classList.add('show');
+            setTimeout(() => {
+                elements.toast.classList.remove('show');
+            }, 3000);
+        }
 
-    document.getElementById('settingsBtn').addEventListener('click', () => {
-      document.getElementById('mainScreen').classList.remove('active');
-      document.getElementById('settingsScreen').classList.add('active');
-    });
+        function displayImage(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                currentImage = e.target.result;
+                elements.photoCanvas.innerHTML = `<img src="${currentImage}" alt="Selected photo" id="displayedImage">`;
+                applyAllFilters();
+                elements.saveBtn.disabled = false;
+                elements.shareBtn.disabled = false;
+                showToast('✅ تم تحميل الصورة بنجاح!');
+            };
+            reader.readAsDataURL(file);
+        }
 
-    document.getElementById('backBtn').addEventListener('click', () => {
-      document.getElementById('settingsScreen').classList.remove('active');
-      document.getElementById('mainScreen').classList.add('active');
-    });
+        function applyAllFilters() {
+            const img = document.getElementById('displayedImage');
+            if (!img) return;
 
-    // وظائف الأزرار
-    function showToast(message) {
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 2000);
-    }
+            const filterString = `
+                brightness(${imageFilters.brightness}%)
+                contrast(${imageFilters.contrast}%)
+                saturate(${imageFilters.saturation}%)
+                blur(${imageFilters.blur}px)
+                grayscale(${imageFilters.grayscale}%)
+                sepia(${imageFilters.sepia}%)
+                hue-rotate(${imageFilters.hueRotate}deg)
+            `.trim();
 
-    document.getElementById('cropBtn').addEventListener('click', () => {
-      showToast('جاري فتح أداة القص...');
-    });
+            img.style.filter = filterString;
+            img.style.transform = `
+                rotate(${imageFilters.rotation}deg)
+                scaleX(${imageFilters.flipH})
+                scaleY(${imageFilters.flipV})
+            `;
+        }
 
-    document.getElementById('rotateBtn').addEventListener('click', () => {
-      showToast('جاري تدوير الصورة...');
-    });
+        elements.uploadBtn.addEventListener('click', () => {
+            elements.uploadInput.click();
+        });
 
-    document.getElementById('resizeBtn').addEventListener('click', () => {
-      showToast('جاري فتح أداة تغيير الحجم...');
-    });
+        elements.cameraBtn.addEventListener('click', () => {
+            elements.cameraInput.click();
+        });
 
-    document.getElementById('brightnessBtn').addEventListener('click', () => {
-      showToast('جاري ضبط السطوع...');
-    });
+        elements.uploadInput.addEventListener('change', (e) => {
+            if (e.target.files && e.target.files[0]) {
+                displayImage(e.target.files[0]);
+            }
+        });
 
-    document.getElementById('contrastBtn').addEventListener('click', () => {
-      showToast('جاري ضبط التباين...');
-    });
+        elements.cameraInput.addEventListener('change', (e) => {
+            if (e.target.files && e.target.files[0]) {
+                displayImage(e.target.files[0]);
+            }
+        });
 
-    document.getElementById('saturationBtn').addEventListener('click', () => {
-      showToast('جاري ضبط التشبع...');
-    });
+        // Tool buttons
+        document.querySelectorAll('.tool-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tool = btn.dataset.tool;
+                
+                if (tool === 'filters') {
+                    showFiltersMenu();
+                    return;
+                }
 
-    document.getElementById('filtersBtn').addEventListener('click', () => {
-      showToast('جاري تحميل الفلاتر...');
-    });
+                if (tool === 'rotate') {
+                    imageFilters.rotation = (imageFilters.rotation + 90) % 360;
+                    applyAllFilters();
+                    showToast('🔄 تم التدوير');
+                    return;
+                }
 
-    document.getElementById('textBtn').addEventListener('click', () => {
-      showToast('جاري فتح أدوات النصوص...');
-    });
+                if (tool === 'flip') {
+                    imageFilters.flipH *= -1;
+                    applyAllFilters();
+                    showToast('↔️ تم القلب');
+                    return;
+                }
 
-    document.getElementById('stickersBtn').addEventListener('click', () => {
-      showToast('جاري تحميل الملصقات...');
-    });
+                document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentTool = tool;
+                showAdjustmentPanel(tool);
+            });
+        });
 
-    document.getElementById('frameBtn').addEventListener('click', () => {
-      showToast('جاري تحميل الإطارات...');
-    });
+        function showAdjustmentPanel(tool) {
+            elements.adjustmentPanel.classList.add('active');
+            
+            const toolConfig = {
+                'adjust': { label: 'الضبط العام', min: 0, max: 200, value: 100 },
+                'brightness': { label: 'السطوع', min: 0, max: 200, value: imageFilters.brightness },
+                'contrast': { label: 'التباين', min: 0, max: 200, value: imageFilters.contrast },
+                'saturation': { label: 'التشبع', min: 0, max: 200, value: imageFilters.saturation },
+                'blur': { label: 'الضبابية', min: 0, max: 20, value: imageFilters.blur }
+            };
 
-    document.getElementById('blurBtn').addEventListener('click', () => {
-      showToast('جاري تطبيق التمويه...');
-    });
+            const config = toolConfig[tool];
+            elements.currentToolLabel.textContent = config.label;
+            elements.adjustmentSlider.min = config.min;
+            elements.adjustmentSlider.max = config.max;
+            elements.adjustmentSlider.value = config.value;
+            updateSliderValue(config.value, tool);
+        }
 
-    document.getElementById('sharpenBtn').addEventListener('click', () => {
-      showToast('جاري تطبيق التوضيح...');
-    });
+        function showFiltersMenu() {
+            const filters = [
+                { name: 'عادي', action: () => { imageFilters.grayscale = 0; imageFilters.sepia = 0; } },
+                { name: 'أبيض وأسود', action: () => { imageFilters.grayscale = 100; imageFilters.sepia = 0; } },
+                { name: 'سيبيا', action: () => { imageFilters.sepia = 100; imageFilters.grayscale = 0; } },
+                { name: 'دافئ', action: () => { imageFilters.hueRotate = 30; imageFilters.saturation = 120; } },
+                { name: 'بارد', action: () => { imageFilters.hueRotate = -30; imageFilters.saturation = 120; } }
+            ];
 
-    document.getElementById('backgroundBtn').addEventListener('click', () => {
-      showToast('جاري تغيير الخلفية...');
-    });
+            const filterIndex = Math.floor(Math.random() * filters.length);
+            filters[filterIndex].action();
+            applyAllFilters();
+            showToast(`🎨 تم تطبيق فلتر ${filters[filterIndex].name}`);
+        }
 
-    document.getElementById('effectsBtn').addEventListener('click', () => {
-      showToast('جاري تحميل التأثيرات...');
-    });
+        elements.adjustmentSlider.addEventListener('input', (e) => {
+            const value = parseInt(e.target.value);
+            updateSliderValue(value, currentTool);
+            
+            switch(currentTool) {
+                case 'brightness':
+                    imageFilters.brightness = value;
+                    break;
+                case 'contrast':
+                    imageFilters.contrast = value;
+                    break;
+                case 'saturation':
+                    imageFilters.saturation = value;
+                    break;
+                case 'blur':
+                    imageFilters.blur = value;
+                    break;
+            }
+            
+            applyAllFilters();
+        });
 
-    document.getElementById('undoBtn').addEventListener('click', () => {
-      showToast('تم التراجع عن آخر عملية');
-    });
+        function updateSliderValue(value, tool) {
+            if (tool === 'blur') {
+                elements.sliderValue.textContent = `${value}px`;
+            } else {
+                elements.sliderValue.textContent = `${value}%`;
+            }
+        }
 
-    document.getElementById('redoBtn').addEventListener('click', () => {
-      showToast('تم إعادة آخر عملية');
-    });
+        elements.resetBtn.addEventListener('click', () => {
+            imageFilters = {
+                brightness: 100,
+                contrast: 100,
+                saturation: 100,
+                blur: 0,
+                grayscale: 0,
+                sepia: 0,
+                hueRotate: 0,
+                rotation: 0,
+                flipH: 1,
+                flipV: 1
+            };
+            applyAllFilters();
+            elements.adjustmentPanel.classList.remove('active');
+            document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+            showToast('🔄 تم إعادة تعيين جميع التعديلات');
+        });
 
-    document.getElementById('saveBtn').addEventListener('click', () => {
-      showToast('تم حفظ الصورة بنجاح! ✓');
-    });
+        elements.saveBtn.addEventListener('click', () => {
+            if (!currentImage) return;
+            
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = document.getElementById('displayedImage');
+            
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            
+            ctx.filter = img.style.filter;
+            
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.rotate(imageFilters.rotation * Math.PI / 180);
+            ctx.scale(imageFilters.flipH, imageFilters.flipV);
+            ctx.drawImage(img, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+            
+            const link = document.createElement('a');
+            link.download = `edited_photo_${Date.now()}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+            
+            showToast('💾 تم حفظ الصورة بنجاح!');
+        });
 
-    document.getElementById('shareBtn').addEventListener('click', () => {
-      showToast('جاري فتح خيارات المشاركة...');
-    });
+        elements.shareBtn.addEventListener('click', async () => {
+            if (!currentImage) return;
+            
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = document.getElementById('displayedImage');
+            
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            
+            ctx.filter = img.style.filter;
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.rotate(imageFilters.rotation * Math.PI / 180);
+            ctx.scale(imageFilters.flipH, imageFilters.flipV);
+            ctx.drawImage(img, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+            
+            canvas.toBlob(async (blob) => {
+                const file = new File([blob], 'photo.png', { type: 'image/png' });
+                
+                if (navigator.share) {
+                    try {
+                        await navigator.share({
+                            files: [file],
+                            title: 'صورتي المعدلة',
+                            text: 'شاهد صورتي المعدلة!'
+                        });
+                        showToast('📤 تمت المشاركة بنجاح!');
+                    } catch (err) {
+                        if (err.name !== 'AbortError') {
+                            showToast('⚠️ فشلت المشاركة');
+                        }
+                    }
+                } else {
+                    showToast('⚠️ المشاركة غير مدعومة في هذا المتصفح');
+                }
+            });
+        });
 
-    // Toggle للإشعارات
-    document.getElementById('notificationsToggle').addEventListener('click', function() {
-      this.classList.toggle('active');
-      const status = this.classList.contains('active') ? 'مفعلة' : 'معطلة';
-      showToast(`الإشعارات ${status}`);
-    });
-
-    // تغيير اللغة
-    document.getElementById('languageSelect').addEventListener('change', function() {
-      showToast(`تم تغيير اللغة إلى ${this.options[this.selectedIndex].text}`);
-    });
-
-    // تغيير الجودة
-    document.getElementById('qualitySelect').addEventListener('change', function() {
-      showToast(`تم تغيير الجودة إلى ${this.options[this.selectedIndex].text}`);
-    });
-  </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99a211ff973f6f31',t:'MTc2MjQwNTY3OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+        onConfigChange(defaultConfig);
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99a956f534a6794b',t:'MTc2MjQ4MTkwMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
