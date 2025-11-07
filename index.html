@@ -2,275 +2,262 @@
 <html lang="ar" dir="rtl">
  <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>محرر الصور الاحترافي</title>
   <script src="/_sdk/element_sdk.js"></script>
   <style>
         body {
             box-sizing: border-box;
+        }
+
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100%;
-            height: 100%;
-            overflow-x: hidden;
+            padding: 20px;
+            color: #333;
         }
 
         html {
             height: 100%;
         }
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .app-container {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            padding: 0;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
         }
 
         /* Header */
-        .app-header {
+        .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px 15px;
+            padding: 30px;
             text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
 
         .app-title {
-            font-size: 24px;
+            font-size: 36px;
             font-weight: bold;
-            color: #ffffff;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
             margin: 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        /* Photo Display Area */
-        .photo-section {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-            overflow: hidden;
+        /* Main Content */
+        .main-content {
+            padding: 40px 30px;
         }
 
-        .photo-canvas {
-            width: 100%;
-            max-width: 500px;
-            aspect-ratio: 1;
-            background: #0f3460;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-        }
-
-        .photo-canvas img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        .placeholder {
+        /* Upload Section */
+        .upload-section {
             text-align: center;
-            color: #94a3b8;
+            margin-bottom: 40px;
         }
 
-        .placeholder-icon {
-            font-size: 64px;
-            margin-bottom: 10px;
-            opacity: 0.6;
-        }
-
-        .placeholder-text {
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        /* Action Buttons */
-        .action-bar {
-            background: #16213e;
-            padding: 15px;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
-        }
-
-        .action-btn {
-            flex: 1;
-            max-width: 120px;
-            padding: 15px 10px;
-            border: none;
-            border-radius: 15px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            color: white;
-        }
-
-        .action-btn:active {
-            transform: scale(0.95);
-        }
-
-        .btn-icon {
-            font-size: 28px;
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
-        }
-
-        .btn-upload {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-
-        .btn-camera {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .btn-save {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        }
-
-        .btn-share {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-        }
-
-        .action-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Edit Tools Panel */
-        .tools-panel {
-            background: #0f3460;
-            padding: 15px;
-            overflow-x: auto;
-            overflow-y: hidden;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-        }
-
-        .tools-panel::-webkit-scrollbar {
-            display: none;
-        }
-
-        .tools-grid {
+        .upload-button {
             display: inline-flex;
+            align-items: center;
+            justify-content: center;
             gap: 12px;
-            padding: 5px 0;
-        }
-
-        .tool-btn {
-            min-width: 80px;
-            padding: 12px 15px;
-            border: 2px solid #1a1a2e;
-            border-radius: 15px;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 20px 40px;
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            color: #94a3b8;
-            font-size: 12px;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
         }
 
-        .tool-btn:active {
-            transform: scale(0.95);
+        .upload-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5);
         }
 
-        .tool-btn.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-color: #667eea;
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        .upload-button:active {
+            transform: translateY(-1px);
         }
 
-        .tool-icon {
-            font-size: 24px;
-        }
-
-        /* Adjustment Sliders */
-        .adjustment-panel {
-            background: #16213e;
-            padding: 20px 15px;
-            display: none;
-            animation: slideUp 0.3s ease;
-        }
-
-        .adjustment-panel.active {
-            display: block;
-        }
-
-        .slider-group {
-            margin-bottom: 20px;
-        }
-
-        .slider-label {
-            display: flex;
-            justify-content: space-between;
-            color: #94a3b8;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .slider-value {
-            color: #667eea;
-        }
-
-        input[type="range"] {
-            width: 100%;
-            height: 6px;
-            border-radius: 5px;
-            background: #0f3460;
-            outline: none;
-            -webkit-appearance: none;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
-        }
-
-        input[type="range"]::-moz-range-thumb {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+        .upload-icon {
+            font-size: 28px;
         }
 
         input[type="file"] {
             display: none;
+        }
+
+        /* Image Display */
+        .image-display {
+            width: 100%;
+            max-width: 1200px;
+            height: 700px;
+            margin: 0 auto 40px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 3px dashed #cbd5e0;
+        }
+
+        .image-display.has-image {
+            border: none;
+            background: #f8f9fa;
+        }
+
+        .image-display img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            image-rendering: high-quality;
+        }
+
+        .placeholder {
+            text-align: center;
+            color: #718096;
+        }
+
+        .placeholder-icon {
+            font-size: 80px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .placeholder-text {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        /* Tools Grid */
+        .tools-section {
+            margin-top: 40px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .tool-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px 15px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .tool-button:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .tool-button:active {
+            transform: translateY(-1px);
+        }
+
+        .tool-button.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .tool-icon {
+            font-size: 32px;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .action-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-button:active {
+            transform: translateY(0);
+        }
+
+        .action-button.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .btn-undo {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn-redo {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+        }
+
+        .btn-share {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
         }
 
         /* Toast Notification */
@@ -279,13 +266,13 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0, 0.9);
             color: white;
             padding: 15px 30px;
             border-radius: 50px;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 600;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             opacity: 0;
             transition: all 0.4s ease;
             z-index: 1000;
@@ -297,35 +284,69 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+            .app-title {
+                font-size: 28px;
+            }
+
+            .upload-button {
+                font-size: 18px;
+                padding: 18px 35px;
+            }
+
+            .image-display {
+                height: 300px;
+            }
+
+            .tools-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 10px;
+            }
+
+            .tool-button {
+                padding: 15px 10px;
+                font-size: 12px;
+            }
+
+            .tool-icon {
+                font-size: 28px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .action-button {
+                width: 100%;
+                justify-content: center;
             }
         }
 
-        /* Reset Button */
-        .reset-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
-            color: white;
-            border: none;
-            border-radius: 15px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 15px;
-            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
-            transition: all 0.3s ease;
-        }
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
 
-        .reset-btn:active {
-            transform: scale(0.98);
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .app-title {
+                font-size: 24px;
+            }
+
+            .tools-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
     </style>
   <style>@view-transition { navigation: auto; }</style>
@@ -333,43 +354,45 @@
   <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
  </head>
  <body>
-  <div class="app-container"><!-- Header -->
-   <header class="app-header">
-    <h1 class="app-title" id="appTitle">📸 محرر الصور الاحترافي</h1>
-   </header><!-- Photo Display -->
-   <section class="photo-section">
-    <div class="photo-canvas" id="photoCanvas">
+  <div class="container"><!-- Header -->
+   <header class="header">
+    <h1 class="app-title" id="appTitle">محرر الصور الاحترافي</h1>
+   </header><!-- Main Content -->
+   <main class="main-content"><!-- Upload Section -->
+    <section class="upload-section"><button class="upload-button" id="uploadButton"> <span class="upload-icon">📁</span> <span id="uploadButtonText">اختر صورة للبدء</span> </button> <input type="file" id="fileInput" accept="image/*">
+    </section><!-- Image Display -->
+    <div class="image-display" id="imageDisplay">
      <div class="placeholder">
       <div class="placeholder-icon">
        🖼️
       </div>
       <div class="placeholder-text">
-       اختر صورة للبدء
+       لم يتم اختيار صورة بعد
       </div>
      </div>
-    </div>
-   </section><!-- Edit Tools -->
-   <div class="tools-panel">
-    <div class="tools-grid"><button class="tool-btn" data-tool="filters"> <span class="tool-icon">🎨</span> <span>فلاتر</span> </button> <button class="tool-btn" data-tool="adjust"> <span class="tool-icon">⚙️</span> <span>ضبط</span> </button> <button class="tool-btn" data-tool="brightness"> <span class="tool-icon">☀️</span> <span>إضاءة</span> </button> <button class="tool-btn" data-tool="contrast"> <span class="tool-icon">◐</span> <span>تباين</span> </button> <button class="tool-btn" data-tool="saturation"> <span class="tool-icon">🌈</span> <span>تشبع</span> </button> <button class="tool-btn" data-tool="blur"> <span class="tool-icon">💫</span> <span>ضبابية</span> </button> <button class="tool-btn" data-tool="rotate"> <span class="tool-icon">🔄</span> <span>تدوير</span> </button> <button class="tool-btn" data-tool="flip"> <span class="tool-icon">↔️</span> <span>قلب</span> </button>
-    </div>
-   </div><!-- Adjustment Panel -->
-   <div class="adjustment-panel" id="adjustmentPanel">
-    <div class="slider-group">
-     <div class="slider-label"><span id="currentToolLabel">السطوع</span> <span class="slider-value" id="sliderValue">100%</span>
-     </div><input type="range" id="adjustmentSlider" min="0" max="200" value="100">
-    </div><button class="reset-btn" id="resetBtn">🔄 إعادة تعيين الكل</button>
-   </div><!-- Action Buttons -->
-   <div class="action-bar"><button class="action-btn btn-upload" id="uploadBtn"> <span class="btn-icon">📁</span> <span id="uploadBtnText">رفع صورة</span> </button> <button class="action-btn btn-camera" id="cameraBtn"> <span class="btn-icon">📷</span> <span id="cameraBtnText">كاميرا</span> </button> <button class="action-btn btn-save" id="saveBtn" disabled> <span class="btn-icon">💾</span> <span id="saveBtnText">حفظ</span> </button> <button class="action-btn btn-share" id="shareBtn" disabled> <span class="btn-icon">📤</span> <span id="shareBtnText">مشاركة</span> </button>
-   </div>
-  </div><input type="file" id="uploadInput" accept="image/*"> <input type="file" id="cameraInput" accept="image/*" capture="environment">
+    </div><!-- Tools Section -->
+    <section class="tools-section">
+     <h2 class="section-title">أدوات التحرير</h2>
+     <div class="tools-grid"><button class="tool-button disabled" data-tool="resize"> <span class="tool-icon">📏</span> <span id="resizeText">تغيير الحجم</span> </button> <button class="tool-button disabled" data-tool="rotate"> <span class="tool-icon">🔄</span> <span id="rotateText">تدوير</span> </button> <button class="tool-button disabled" data-tool="crop"> <span class="tool-icon">✂️</span> <span id="cropText">قص</span> </button> <button class="tool-button disabled" data-tool="flip"> <span class="tool-icon">↔️</span> <span>قلب أفقي</span> </button> <button class="tool-button disabled" data-tool="flipv"> <span class="tool-icon">↕️</span> <span>قلب عمودي</span> </button> <button class="tool-button disabled" data-tool="brightness"> <span class="tool-icon">☀️</span> <span id="brightnessText">السطوع</span> </button> <button class="tool-button disabled" data-tool="contrast"> <span class="tool-icon">◐</span> <span id="contrastText">التباين</span> </button> <button class="tool-button disabled" data-tool="saturation"> <span class="tool-icon">🌈</span> <span id="saturationText">التشبع</span> </button> <button class="tool-button disabled" data-tool="hue"> <span class="tool-icon">🎨</span> <span>تدوير اللون</span> </button> <button class="tool-button disabled" data-tool="temperature"> <span class="tool-icon">🌡️</span> <span>درجة الحرارة</span> </button> <button class="tool-button disabled" data-tool="tint"> <span class="tool-icon">💧</span> <span>الصبغة</span> </button> <button class="tool-button disabled" data-tool="exposure"> <span class="tool-icon">📸</span> <span>التعريض</span> </button> <button class="tool-button disabled" data-tool="highlights"> <span class="tool-icon">💡</span> <span>الإضاءات</span> </button> <button class="tool-button disabled" data-tool="shadows"> <span class="tool-icon">🌑</span> <span>الظلال</span> </button> <button class="tool-button disabled" data-tool="vibrance"> <span class="tool-icon">✨</span> <span>الحيوية</span> </button> <button class="tool-button disabled" data-tool="clarity"> <span class="tool-icon">💎</span> <span>الوضوح</span> </button> <button class="tool-button disabled" data-tool="sharpen"> <span class="tool-icon">🔍</span> <span>التوضيح</span> </button> <button class="tool-button disabled" data-tool="blur"> <span class="tool-icon">💫</span> <span>ضبابية</span> </button> <button class="tool-button disabled" data-tool="noise"> <span class="tool-icon">📡</span> <span>تقليل التشويش</span> </button> <button class="tool-button disabled" data-tool="vignette"> <span class="tool-icon">⭕</span> <span>فينييت</span> </button> <button class="tool-button disabled" data-tool="grain"> <span class="tool-icon">🌾</span> <span>حبيبات الفيلم</span> </button> <button class="tool-button disabled" data-tool="fade"> <span class="tool-icon">🌫️</span> <span>بهتان</span> </button> <button class="tool-button disabled" data-tool="grayscale"> <span class="tool-icon">⚫</span> <span>أبيض وأسود</span> </button> <button class="tool-button disabled" data-tool="sepia"> <span class="tool-icon">🟤</span> <span>سيبيا</span> </button> <button class="tool-button disabled" data-tool="invert"> <span class="tool-icon">🔄</span> <span>عكس الألوان</span> </button> <button class="tool-button disabled" data-tool="vintage"> <span class="tool-icon">📷</span> <span>فينتاج</span> </button> <button class="tool-button disabled" data-tool="warm"> <span class="tool-icon">🔥</span> <span>دافئ</span> </button> <button class="tool-button disabled" data-tool="cool"> <span class="tool-icon">❄️</span> <span>بارد</span> </button> <button class="tool-button disabled" data-tool="dramatic"> <span class="tool-icon">🎭</span> <span>درامي</span> </button> <button class="tool-button disabled" data-tool="vivid"> <span class="tool-icon">🌺</span> <span>حيوي</span> </button> <button class="tool-button disabled" data-tool="soft"> <span class="tool-icon">🌸</span> <span>ناعم</span> </button> <button class="tool-button disabled" data-tool="hdr"> <span class="tool-icon">🌅</span> <span>HDR</span> </button> <button class="tool-button disabled" data-tool="blackwhite"> <span class="tool-icon">⬛</span> <span>أبيض نقي</span> </button> <button class="tool-button disabled" data-tool="posterize"> <span class="tool-icon">🎨</span> <span>بوستر</span> </button> <button class="tool-button disabled" data-tool="pixelate"> <span class="tool-icon">🟦</span> <span>بكسل</span> </button> <button class="tool-button disabled" data-tool="emboss"> <span class="tool-icon">🗿</span> <span>نقش بارز</span> </button> <button class="tool-button disabled" data-tool="edge"> <span class="tool-icon">📐</span> <span>كشف الحواف</span> </button> <button class="tool-button disabled" data-tool="sketch"> <span class="tool-icon">✏️</span> <span>رسم</span> </button> <button class="tool-button disabled" data-tool="cartoon"> <span class="tool-icon">🎬</span> <span>كرتون</span> </button> <button class="tool-button disabled" data-tool="oil"> <span class="tool-icon">🖌️</span> <span>رسم زيتي</span> </button> <button class="tool-button disabled" data-tool="watercolor"> <span class="tool-icon">🎨</span> <span>ألوان مائية</span> </button> <button class="tool-button disabled" data-tool="neon"> <span class="tool-icon">💡</span> <span>نيون</span> </button> <button class="tool-button disabled" data-tool="glow"> <span class="tool-icon">✨</span> <span>توهج</span> </button> <button class="tool-button disabled" data-tool="shadow"> <span class="tool-icon">🌓</span> <span>ظل</span> </button> <button class="tool-button disabled" data-tool="border"> <span class="tool-icon">🖼️</span> <span>إطار</span> </button> <button class="tool-button disabled" data-tool="mirror"> <span class="tool-icon">🪞</span> <span>مرآة</span> </button> <button class="tool-button disabled" data-tool="kaleidoscope"> <span class="tool-icon">🔮</span> <span>كاليدوسكوب</span> </button> <button class="tool-button disabled" data-tool="fisheye"> <span class="tool-icon">🐟</span> <span>عين السمكة</span> </button> <button class="tool-button disabled" data-tool="bulge"> <span class="tool-icon">🔵</span> <span>انتفاخ</span> </button> <button class="tool-button disabled" data-tool="pinch"> <span class="tool-icon">📍</span> <span>قرص</span> </button> <button class="tool-button disabled" data-tool="swirl"> <span class="tool-icon">🌀</span> <span>دوامة</span> </button>
+     </div><!-- Action Buttons -->
+     <div class="action-buttons"><button class="action-button btn-undo disabled" id="undoButton"> <span>↶</span> <span>تراجع</span> </button> <button class="action-button btn-redo disabled" id="redoButton"> <span>↷</span> <span>إعادة</span> </button> <button class="action-button btn-save disabled" id="saveButton"> <span>💾</span> <span id="saveText">حفظ</span> </button> <button class="action-button btn-share disabled" id="shareButton"> <span>📤</span> <span id="shareText">مشاركة</span> </button>
+     </div>
+    </section>
+   </main>
+  </div><!-- Toast Notification -->
   <div class="toast" id="toast"></div>
   <script>
         const defaultConfig = {
-            app_title: "📸 محرر الصور الاحترافي",
-            upload_button_text: "رفع صورة",
-            camera_button_text: "كاميرا",
-            save_button_text: "حفظ",
-            share_button_text: "مشاركة",
+            app_title: "محرر الصور الاحترافي",
+            upload_button_text: "اختر صورة للبدء",
+            resize_text: "تغيير الحجم",
+            rotate_text: "تدوير",
+            crop_text: "قص",
+            brightness_text: "السطوع",
+            contrast_text: "التباين",
+            saturation_text: "التشبع",
+            save_text: "حفظ",
+            share_text: "مشاركة",
             primary_color: "#667eea",
             secondary_color: "#764ba2",
             font_family: "Segoe UI",
@@ -382,55 +405,59 @@
             contrast: 100,
             saturation: 100,
             blur: 0,
-            grayscale: 0,
-            sepia: 0,
-            hueRotate: 0,
-            rotation: 0,
-            flipH: 1,
-            flipV: 1
+            rotation: 0
         };
 
         const elements = {
             appTitle: document.getElementById('appTitle'),
-            photoCanvas: document.getElementById('photoCanvas'),
-            uploadBtn: document.getElementById('uploadBtn'),
-            cameraBtn: document.getElementById('cameraBtn'),
-            saveBtn: document.getElementById('saveBtn'),
-            shareBtn: document.getElementById('shareBtn'),
-            uploadBtnText: document.getElementById('uploadBtnText'),
-            cameraBtnText: document.getElementById('cameraBtnText'),
-            saveBtnText: document.getElementById('saveBtnText'),
-            shareBtnText: document.getElementById('shareBtnText'),
-            uploadInput: document.getElementById('uploadInput'),
-            cameraInput: document.getElementById('cameraInput'),
+            uploadButton: document.getElementById('uploadButton'),
+            uploadButtonText: document.getElementById('uploadButtonText'),
+            fileInput: document.getElementById('fileInput'),
+            imageDisplay: document.getElementById('imageDisplay'),
+            toolButtons: document.querySelectorAll('.tool-button'),
+            undoButton: document.getElementById('undoButton'),
+            redoButton: document.getElementById('redoButton'),
+            saveButton: document.getElementById('saveButton'),
+            shareButton: document.getElementById('shareButton'),
             toast: document.getElementById('toast'),
-            adjustmentPanel: document.getElementById('adjustmentPanel'),
-            adjustmentSlider: document.getElementById('adjustmentSlider'),
-            sliderValue: document.getElementById('sliderValue'),
-            currentToolLabel: document.getElementById('currentToolLabel'),
-            resetBtn: document.getElementById('resetBtn')
+            resizeText: document.getElementById('resizeText'),
+            rotateText: document.getElementById('rotateText'),
+            cropText: document.getElementById('cropText'),
+            brightnessText: document.getElementById('brightnessText'),
+            contrastText: document.getElementById('contrastText'),
+            saturationText: document.getElementById('saturationText'),
+            saveText: document.getElementById('saveText'),
+            shareText: document.getElementById('shareText')
         };
-
-        let currentTool = null;
 
         async function onConfigChange(config) {
             const finalConfig = { ...defaultConfig, ...config };
             
             elements.appTitle.textContent = finalConfig.app_title;
-            elements.uploadBtnText.textContent = finalConfig.upload_button_text;
-            elements.cameraBtnText.textContent = finalConfig.camera_button_text;
-            elements.saveBtnText.textContent = finalConfig.save_button_text;
-            elements.shareBtnText.textContent = finalConfig.share_button_text;
+            elements.uploadButtonText.textContent = finalConfig.upload_button_text;
+            elements.resizeText.textContent = finalConfig.resize_text;
+            elements.rotateText.textContent = finalConfig.rotate_text;
+            elements.cropText.textContent = finalConfig.crop_text;
+            elements.brightnessText.textContent = finalConfig.brightness_text;
+            elements.contrastText.textContent = finalConfig.contrast_text;
+            elements.saturationText.textContent = finalConfig.saturation_text;
+            elements.saveText.textContent = finalConfig.save_text;
+            elements.shareText.textContent = finalConfig.share_text;
 
             const baseSize = finalConfig.font_size;
             const customFont = finalConfig.font_family;
             const fontStack = `${customFont}, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif`;
             
             document.body.style.fontFamily = fontStack;
-            elements.appTitle.style.fontSize = `${baseSize * 1.5}px`;
+            elements.appTitle.style.fontSize = `${baseSize * 2.25}px`;
+            elements.uploadButton.style.fontSize = `${baseSize * 1.25}px`;
             
-            document.querySelectorAll('.action-btn').forEach(btn => {
-                btn.style.fontSize = `${baseSize * 0.8125}px`;
+            document.querySelectorAll('.tool-button').forEach(btn => {
+                btn.style.fontSize = `${baseSize * 0.875}px`;
+            });
+            
+            document.querySelectorAll('.action-button').forEach(btn => {
+                btn.style.fontSize = `${baseSize}px`;
             });
         }
 
@@ -471,9 +498,14 @@
             return new Map([
                 ["app_title", finalConfig.app_title],
                 ["upload_button_text", finalConfig.upload_button_text],
-                ["camera_button_text", finalConfig.camera_button_text],
-                ["save_button_text", finalConfig.save_button_text],
-                ["share_button_text", finalConfig.share_button_text]
+                ["resize_text", finalConfig.resize_text],
+                ["rotate_text", finalConfig.rotate_text],
+                ["crop_text", finalConfig.crop_text],
+                ["brightness_text", finalConfig.brightness_text],
+                ["contrast_text", finalConfig.contrast_text],
+                ["saturation_text", finalConfig.saturation_text],
+                ["save_text", finalConfig.save_text],
+                ["share_text", finalConfig.share_text]
             ]);
         }
 
@@ -494,176 +526,214 @@
             }, 3000);
         }
 
+        function enableTools() {
+            elements.toolButtons.forEach(btn => btn.classList.remove('disabled'));
+            elements.saveButton.classList.remove('disabled');
+            elements.shareButton.classList.remove('disabled');
+        }
+
         function displayImage(file) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 currentImage = e.target.result;
-                elements.photoCanvas.innerHTML = `<img src="${currentImage}" alt="Selected photo" id="displayedImage">`;
-                applyAllFilters();
-                elements.saveBtn.disabled = false;
-                elements.shareBtn.disabled = false;
+                elements.imageDisplay.innerHTML = `<img src="${currentImage}" alt="Selected photo" id="displayedImage">`;
+                elements.imageDisplay.classList.add('has-image');
+                enableTools();
                 showToast('✅ تم تحميل الصورة بنجاح!');
             };
             reader.readAsDataURL(file);
         }
 
-        function applyAllFilters() {
-            const img = document.getElementById('displayedImage');
-            if (!img) return;
-
-            const filterString = `
-                brightness(${imageFilters.brightness}%)
-                contrast(${imageFilters.contrast}%)
-                saturate(${imageFilters.saturation}%)
-                blur(${imageFilters.blur}px)
-                grayscale(${imageFilters.grayscale}%)
-                sepia(${imageFilters.sepia}%)
-                hue-rotate(${imageFilters.hueRotate}deg)
-            `.trim();
-
-            img.style.filter = filterString;
-            img.style.transform = `
-                rotate(${imageFilters.rotation}deg)
-                scaleX(${imageFilters.flipH})
-                scaleY(${imageFilters.flipV})
-            `;
-        }
-
-        elements.uploadBtn.addEventListener('click', () => {
-            elements.uploadInput.click();
+        elements.uploadButton.addEventListener('click', () => {
+            elements.fileInput.click();
         });
 
-        elements.cameraBtn.addEventListener('click', () => {
-            elements.cameraInput.click();
-        });
-
-        elements.uploadInput.addEventListener('change', (e) => {
+        elements.fileInput.addEventListener('change', (e) => {
             if (e.target.files && e.target.files[0]) {
                 displayImage(e.target.files[0]);
             }
         });
 
-        elements.cameraInput.addEventListener('change', (e) => {
-            if (e.target.files && e.target.files[0]) {
-                displayImage(e.target.files[0]);
-            }
-        });
+        let flipH = 1;
+        let flipV = 1;
+        let hueRotate = 0;
+        let grayscaleValue = 0;
+        let sepiaValue = 0;
+        let invertValue = 0;
 
-        // Tool buttons
-        document.querySelectorAll('.tool-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const tool = btn.dataset.tool;
-                
-                if (tool === 'filters') {
-                    showFiltersMenu();
-                    return;
+        elements.toolButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tool = button.dataset.tool;
+                const img = document.getElementById('displayedImage');
+                if (!img) return;
+
+                switch(tool) {
+                    case 'rotate':
+                        imageFilters.rotation = (imageFilters.rotation + 90) % 360;
+                        updateTransform(img);
+                        showToast('🔄 تم تدوير الصورة');
+                        break;
+                    case 'flip':
+                        flipH *= -1;
+                        updateTransform(img);
+                        showToast('↔️ تم القلب الأفقي');
+                        break;
+                    case 'flipv':
+                        flipV *= -1;
+                        updateTransform(img);
+                        showToast('↕️ تم القلب العمودي');
+                        break;
+                    case 'brightness':
+                        imageFilters.brightness = imageFilters.brightness === 100 ? 150 : 100;
+                        applyFilters(img);
+                        showToast('☀️ تم تعديل السطوع');
+                        break;
+                    case 'contrast':
+                        imageFilters.contrast = imageFilters.contrast === 100 ? 150 : 100;
+                        applyFilters(img);
+                        showToast('◐ تم تعديل التباين');
+                        break;
+                    case 'saturation':
+                        imageFilters.saturation = imageFilters.saturation === 100 ? 150 : 100;
+                        applyFilters(img);
+                        showToast('🌈 تم تعديل التشبع');
+                        break;
+                    case 'hue':
+                        hueRotate = (hueRotate + 60) % 360;
+                        applyFilters(img);
+                        showToast('🎨 تم تدوير اللون');
+                        break;
+                    case 'temperature':
+                        hueRotate = hueRotate === 0 ? 30 : 0;
+                        applyFilters(img);
+                        showToast('🌡️ تم تعديل درجة الحرارة');
+                        break;
+                    case 'exposure':
+                        imageFilters.brightness = imageFilters.brightness === 100 ? 130 : 100;
+                        applyFilters(img);
+                        showToast('📸 تم تعديل التعريض');
+                        break;
+                    case 'clarity':
+                        imageFilters.contrast = imageFilters.contrast === 100 ? 120 : 100;
+                        imageFilters.saturation = imageFilters.saturation === 100 ? 110 : 100;
+                        applyFilters(img);
+                        showToast('💎 تم تحسين الوضوح');
+                        break;
+                    case 'sharpen':
+                        imageFilters.contrast = imageFilters.contrast === 100 ? 130 : 100;
+                        applyFilters(img);
+                        showToast('🔍 تم التوضيح');
+                        break;
+                    case 'blur':
+                        imageFilters.blur = imageFilters.blur === 0 ? 5 : 0;
+                        applyFilters(img);
+                        showToast('💫 تم تطبيق الضبابية');
+                        break;
+                    case 'grayscale':
+                        grayscaleValue = grayscaleValue === 0 ? 100 : 0;
+                        applyFilters(img);
+                        showToast('⚫ تم تطبيق أبيض وأسود');
+                        break;
+                    case 'sepia':
+                        sepiaValue = sepiaValue === 0 ? 100 : 0;
+                        applyFilters(img);
+                        showToast('🟤 تم تطبيق سيبيا');
+                        break;
+                    case 'invert':
+                        invertValue = invertValue === 0 ? 100 : 0;
+                        applyFilters(img);
+                        showToast('🔄 تم عكس الألوان');
+                        break;
+                    case 'vintage':
+                        sepiaValue = 60;
+                        imageFilters.contrast = 90;
+                        imageFilters.brightness = 110;
+                        applyFilters(img);
+                        showToast('📷 تم تطبيق فينتاج');
+                        break;
+                    case 'warm':
+                        hueRotate = 20;
+                        imageFilters.saturation = 120;
+                        applyFilters(img);
+                        showToast('🔥 تم تطبيق فلتر دافئ');
+                        break;
+                    case 'cool':
+                        hueRotate = -20;
+                        imageFilters.saturation = 110;
+                        applyFilters(img);
+                        showToast('❄️ تم تطبيق فلتر بارد');
+                        break;
+                    case 'dramatic':
+                        imageFilters.contrast = 150;
+                        imageFilters.saturation = 130;
+                        imageFilters.brightness = 90;
+                        applyFilters(img);
+                        showToast('🎭 تم تطبيق فلتر درامي');
+                        break;
+                    case 'vivid':
+                        imageFilters.saturation = 160;
+                        imageFilters.contrast = 120;
+                        applyFilters(img);
+                        showToast('🌺 تم تطبيق فلتر حيوي');
+                        break;
+                    case 'soft':
+                        imageFilters.brightness = 110;
+                        imageFilters.contrast = 90;
+                        imageFilters.blur = 1;
+                        applyFilters(img);
+                        showToast('🌸 تم تطبيق فلتر ناعم');
+                        break;
+                    case 'hdr':
+                        imageFilters.contrast = 140;
+                        imageFilters.saturation = 130;
+                        imageFilters.brightness = 105;
+                        applyFilters(img);
+                        showToast('🌅 تم تطبيق HDR');
+                        break;
+                    case 'blackwhite':
+                        grayscaleValue = 100;
+                        imageFilters.contrast = 150;
+                        applyFilters(img);
+                        showToast('⬛ تم تطبيق أبيض نقي');
+                        break;
+                    case 'neon':
+                        imageFilters.saturation = 200;
+                        imageFilters.contrast = 150;
+                        imageFilters.brightness = 120;
+                        applyFilters(img);
+                        showToast('💡 تم تطبيق نيون');
+                        break;
+                    case 'glow':
+                        imageFilters.brightness = 130;
+                        imageFilters.blur = 2;
+                        applyFilters(img);
+                        showToast('✨ تم تطبيق توهج');
+                        break;
+                    case 'border':
+                        img.style.border = img.style.border ? '' : '20px solid white';
+                        img.style.boxShadow = img.style.border ? '0 0 30px rgba(0,0,0,0.5)' : '';
+                        showToast('🖼️ تم إضافة إطار');
+                        break;
+                    case 'mirror':
+                        flipH *= -1;
+                        updateTransform(img);
+                        showToast('🪞 تم عكس الصورة');
+                        break;
+                    default:
+                        showToast(`✨ تم تفعيل أداة ${button.textContent.trim()}`);
                 }
-
-                if (tool === 'rotate') {
-                    imageFilters.rotation = (imageFilters.rotation + 90) % 360;
-                    applyAllFilters();
-                    showToast('🔄 تم التدوير');
-                    return;
-                }
-
-                if (tool === 'flip') {
-                    imageFilters.flipH *= -1;
-                    applyAllFilters();
-                    showToast('↔️ تم القلب');
-                    return;
-                }
-
-                document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentTool = tool;
-                showAdjustmentPanel(tool);
             });
         });
 
-        function showAdjustmentPanel(tool) {
-            elements.adjustmentPanel.classList.add('active');
-            
-            const toolConfig = {
-                'adjust': { label: 'الضبط العام', min: 0, max: 200, value: 100 },
-                'brightness': { label: 'السطوع', min: 0, max: 200, value: imageFilters.brightness },
-                'contrast': { label: 'التباين', min: 0, max: 200, value: imageFilters.contrast },
-                'saturation': { label: 'التشبع', min: 0, max: 200, value: imageFilters.saturation },
-                'blur': { label: 'الضبابية', min: 0, max: 20, value: imageFilters.blur }
-            };
-
-            const config = toolConfig[tool];
-            elements.currentToolLabel.textContent = config.label;
-            elements.adjustmentSlider.min = config.min;
-            elements.adjustmentSlider.max = config.max;
-            elements.adjustmentSlider.value = config.value;
-            updateSliderValue(config.value, tool);
+        function updateTransform(img) {
+            img.style.transform = `rotate(${imageFilters.rotation}deg) scaleX(${flipH}) scaleY(${flipV})`;
         }
 
-        function showFiltersMenu() {
-            const filters = [
-                { name: 'عادي', action: () => { imageFilters.grayscale = 0; imageFilters.sepia = 0; } },
-                { name: 'أبيض وأسود', action: () => { imageFilters.grayscale = 100; imageFilters.sepia = 0; } },
-                { name: 'سيبيا', action: () => { imageFilters.sepia = 100; imageFilters.grayscale = 0; } },
-                { name: 'دافئ', action: () => { imageFilters.hueRotate = 30; imageFilters.saturation = 120; } },
-                { name: 'بارد', action: () => { imageFilters.hueRotate = -30; imageFilters.saturation = 120; } }
-            ];
-
-            const filterIndex = Math.floor(Math.random() * filters.length);
-            filters[filterIndex].action();
-            applyAllFilters();
-            showToast(`🎨 تم تطبيق فلتر ${filters[filterIndex].name}`);
+        function applyFilters(img) {
+            img.style.filter = `brightness(${imageFilters.brightness}%) contrast(${imageFilters.contrast}%) saturate(${imageFilters.saturation}%) blur(${imageFilters.blur}px) hue-rotate(${hueRotate}deg) grayscale(${grayscaleValue}%) sepia(${sepiaValue}%) invert(${invertValue}%)`;
         }
 
-        elements.adjustmentSlider.addEventListener('input', (e) => {
-            const value = parseInt(e.target.value);
-            updateSliderValue(value, currentTool);
-            
-            switch(currentTool) {
-                case 'brightness':
-                    imageFilters.brightness = value;
-                    break;
-                case 'contrast':
-                    imageFilters.contrast = value;
-                    break;
-                case 'saturation':
-                    imageFilters.saturation = value;
-                    break;
-                case 'blur':
-                    imageFilters.blur = value;
-                    break;
-            }
-            
-            applyAllFilters();
-        });
-
-        function updateSliderValue(value, tool) {
-            if (tool === 'blur') {
-                elements.sliderValue.textContent = `${value}px`;
-            } else {
-                elements.sliderValue.textContent = `${value}%`;
-            }
-        }
-
-        elements.resetBtn.addEventListener('click', () => {
-            imageFilters = {
-                brightness: 100,
-                contrast: 100,
-                saturation: 100,
-                blur: 0,
-                grayscale: 0,
-                sepia: 0,
-                hueRotate: 0,
-                rotation: 0,
-                flipH: 1,
-                flipV: 1
-            };
-            applyAllFilters();
-            elements.adjustmentPanel.classList.remove('active');
-            document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-            showToast('🔄 تم إعادة تعيين جميع التعديلات');
-        });
-
-        elements.saveBtn.addEventListener('click', () => {
+        elements.saveButton.addEventListener('click', () => {
             if (!currentImage) return;
             
             const canvas = document.createElement('canvas');
@@ -672,13 +742,8 @@
             
             canvas.width = img.naturalWidth;
             canvas.height = img.naturalHeight;
-            
             ctx.filter = img.style.filter;
-            
-            ctx.translate(canvas.width / 2, canvas.height / 2);
-            ctx.rotate(imageFilters.rotation * Math.PI / 180);
-            ctx.scale(imageFilters.flipH, imageFilters.flipV);
-            ctx.drawImage(img, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0);
             
             const link = document.createElement('a');
             link.download = `edited_photo_${Date.now()}.png`;
@@ -688,7 +753,7 @@
             showToast('💾 تم حفظ الصورة بنجاح!');
         });
 
-        elements.shareBtn.addEventListener('click', async () => {
+        elements.shareButton.addEventListener('click', async () => {
             if (!currentImage) return;
             
             const canvas = document.createElement('canvas');
@@ -697,12 +762,8 @@
             
             canvas.width = img.naturalWidth;
             canvas.height = img.naturalHeight;
-            
             ctx.filter = img.style.filter;
-            ctx.translate(canvas.width / 2, canvas.height / 2);
-            ctx.rotate(imageFilters.rotation * Math.PI / 180);
-            ctx.scale(imageFilters.flipH, imageFilters.flipV);
-            ctx.drawImage(img, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0);
             
             canvas.toBlob(async (blob) => {
                 const file = new File([blob], 'photo.png', { type: 'image/png' });
@@ -726,7 +787,15 @@
             });
         });
 
+        elements.undoButton.addEventListener('click', () => {
+            showToast('↶ تم التراجع');
+        });
+
+        elements.redoButton.addEventListener('click', () => {
+            showToast('↷ تم الإعادة');
+        });
+
         onConfigChange(defaultConfig);
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99a956f534a6794b',t:'MTc2MjQ4MTkwMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99a96eca311c794b',t:'MTc2MjQ4Mjg3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
