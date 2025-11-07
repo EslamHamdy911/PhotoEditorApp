@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>محرر الصور</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    html {
+      height: 100%;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .app-container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* شاشة البداية */
+    .splash-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      animation: fadeOut 0.5s ease-in-out 2s forwards;
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    .logo-container {
+      text-align: center;
+      animation: scaleIn 0.6s ease-out;
+    }
+
+    @keyframes scaleIn {
+      from {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .logo-icon {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+    }
+
+    .logo-text {
+      font-size: 48px;
+      font-weight: bold;
+      margin: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo-tagline {
+      font-size: 18px;
+      margin-top: 10px;
+      opacity: 0.8;
+    }
+
+    /* الشاشة الرئيسية */
+    .main-screen {
+      display: none;
+      flex-direction: column;
+      height: 100%;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .main-screen.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .header {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid rgba(255,255,255,0.1);
+    }
+
+    .header-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .settings-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .settings-btn:hover {
+      transform: rotate(90deg);
+    }
+
+    .content {
+      flex: 1;
+      padding: 30px 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .image-preview {
+      width: 100%;
+      height: 250px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .preview-placeholder {
+      font-size: 64px;
+      opacity: 0.3;
+    }
+
+    .action-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .action-buttons {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .action-btn {
+      padding: 20px;
+      border: none;
+      border-radius: 15px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .action-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .action-btn:active {
+      transform: translateY(-2px);
+    }
+
+    .btn-icon {
+      font-size: 32px;
+    }
+
+    .save-btn {
+      grid-column: 1 / -1;
+      font-size: 18px;
+    }
+
+    .share-btn {
+      grid-column: 1 / -1;
+      font-size: 18px;
+    }
+
+    /* صفحة الإعدادات */
+    .settings-screen {
+      display: none;
+      flex-direction: column;
+      height: 100%;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .settings-screen.active {
+      display: flex;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(-100%);
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
+
+    .settings-header {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border-bottom: 2px solid rgba(255,255,255,0.1);
+    }
+
+    .back-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      font-size: 24px;
+    }
+
+    .back-btn:hover {
+      transform: translateX(5px);
+    }
+
+    .settings-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .settings-content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .setting-item {
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .setting-item:hover {
+      transform: translateX(-5px);
+    }
+
+    .setting-label {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .toggle-switch {
+      width: 50px;
+      height: 26px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 13px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-switch.active {
+      background: #4CAF50;
+    }
+
+    .toggle-slider {
+      width: 22px;
+      height: 22px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .toggle-switch.active .toggle-slider {
+      right: 26px;
+    }
+
+    .select-wrapper {
+      position: relative;
+    }
+
+    .custom-select {
+      padding: 8px 35px 8px 15px;
+      border-radius: 10px;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+      appearance: none;
+      min-width: 120px;
+    }
+
+    .select-arrow {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-weight: 500;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="app-container"><!-- شاشة البداية -->
+   <div class="splash-screen" id="splashScreen">
+    <div class="logo-container">
+     <svg class="logo-icon" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs>
+       <lineargradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+       </lineargradient>
+      </defs> <rect x="10" y="10" width="80" height="80" rx="15" fill="url(#logoGradient)" /> <circle cx="35" cy="35" r="8" fill="white" opacity="0.9" /> <path d="M 25 60 Q 50 40, 75 60 L 75 80 Q 75 85, 70 85 L 30 85 Q 25 85, 25 80 Z" fill="white" opacity="0.9" />
+     </svg>
+     <h1 class="logo-text" id="logoText">PhotoEdit</h1>
+     <p class="logo-tagline" id="logoTagline">حرر صورك بإبداع</p>
+    </div>
+   </div><!-- الشاشة الرئيسية -->
+   <div class="main-screen" id="mainScreen">
+    <div class="header">
+     <h2 class="header-title" id="headerTitle">محرر الصور</h2><button class="settings-btn" id="settingsBtn" aria-label="الإعدادات">
+      <svg width="28" height="28" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3" /> <path d="M12 1v6m0 6v6m9-9h-6m-6 0H3" />
+      </svg></button>
+    </div>
+    <div class="content">
+     <div class="image-preview" id="imagePreview">
+      <div class="preview-placeholder">
+       🖼️
+      </div>
+     </div>
+     <div class="action-buttons"><button class="action-btn" id="cropBtn"> <span class="btn-icon">✂️</span> <span id="cropBtnText">قص الصورة</span> </button> <button class="action-btn" id="rotateBtn"> <span class="btn-icon">🔄</span> <span id="rotateBtnText">تدوير</span> </button> <button class="action-btn" id="resizeBtn"> <span class="btn-icon">📏</span> <span id="resizeBtnText">تغيير الحجم</span> </button> <button class="action-btn" id="brightnessBtn"> <span class="btn-icon">☀️</span> <span id="brightnessBtnText">السطوع</span> </button> <button class="action-btn" id="contrastBtn"> <span class="btn-icon">🌗</span> <span id="contrastBtnText">التباين</span> </button> <button class="action-btn" id="saturationBtn"> <span class="btn-icon">🌈</span> <span id="saturationBtnText">التشبع</span> </button> <button class="action-btn" id="filtersBtn"> <span class="btn-icon">🎨</span> <span id="filtersBtnText">الفلاتر</span> </button> <button class="action-btn" id="textBtn"> <span class="btn-icon">📝</span> <span id="textBtnText">النصوص</span> </button> <button class="action-btn" id="stickersBtn"> <span class="btn-icon">😊</span> <span id="stickersBtnText">الملصقات</span> </button> <button class="action-btn" id="frameBtn"> <span class="btn-icon">🖼️</span> <span id="frameBtnText">الإطارات</span> </button> <button class="action-btn" id="blurBtn"> <span class="btn-icon">🌫️</span> <span id="blurBtnText">التمويه</span> </button> <button class="action-btn" id="sharpenBtn"> <span class="btn-icon">🔍</span> <span id="sharpenBtnText">التوضيح</span> </button> <button class="action-btn" id="backgroundBtn"> <span class="btn-icon">🏞️</span> <span id="backgroundBtnText">الخلفية</span> </button> <button class="action-btn" id="effectsBtn"> <span class="btn-icon">✨</span> <span id="effectsBtnText">التأثيرات</span> </button> <button class="action-btn" id="undoBtn"> <span class="btn-icon">↶</span> <span id="undoBtnText">تراجع</span> </button> <button class="action-btn" id="redoBtn"> <span class="btn-icon">↷</span> <span id="redoBtnText">إعادة</span> </button> <button class="action-btn save-btn" id="saveBtn"> <span class="btn-icon">💾</span> <span id="saveBtnText">الحفظ</span> </button> <button class="action-btn share-btn" id="shareBtn"> <span class="btn-icon">📤</span> <span id="shareBtnText">مشاركة</span> </button>
+     </div>
+    </div>
+   </div><!-- صفحة الإعدادات -->
+   <div class="settings-screen" id="settingsScreen">
+    <div class="settings-header"><button class="back-btn" id="backBtn" aria-label="رجوع">←</button>
+     <h2 class="settings-title" id="settingsTitle">الإعدادات</h2>
+    </div>
+    <div class="settings-content">
+     <div class="setting-item" id="languageSetting"><span class="setting-label" id="languageLabel">اللغة</span>
+      <div class="select-wrapper"><select class="custom-select" id="languageSelect"> <option value="ar">العربية</option> <option value="en">English</option> <option value="fr">Français</option> </select> <span class="select-arrow">▼</span>
+      </div>
+     </div>
+     <div class="setting-item" id="qualitySetting"><span class="setting-label" id="qualityLabel">جودة الحفظ</span>
+      <div class="select-wrapper"><select class="custom-select" id="qualitySelect"> <option value="high">عالية</option> <option value="medium">متوسطة</option> <option value="low">منخفضة</option> </select> <span class="select-arrow">▼</span>
+      </div>
+     </div>
+     <div class="setting-item" id="notificationsSetting"><span class="setting-label" id="notificationsLabel">الإشعارات</span>
+      <div class="toggle-switch active" id="notificationsToggle">
+       <div class="toggle-slider"></div>
+      </div>
+     </div>
+    </div>
+   </div><!-- Toast notification -->
+   <div class="toast" id="toast"></div>
+  </div>
+  <script>
+    const defaultConfig = {
+      background_color: "#f0f4ff",
+      surface_color: "#ffffff",
+      text_color: "#2d3748",
+      primary_action_color: "#667eea",
+      secondary_action_color: "#764ba2",
+      app_logo_text: "PhotoEdit",
+      app_tagline: "حرر صورك بإبداع",
+      crop_button_text: "قص الصورة",
+      rotate_button_text: "تدوير",
+      resize_button_text: "تغيير الحجم",
+      brightness_button_text: "السطوع",
+      contrast_button_text: "التباين",
+      saturation_button_text: "التشبع",
+      filters_button_text: "الفلاتر",
+      text_button_text: "النصوص",
+      stickers_button_text: "الملصقات",
+      frame_button_text: "الإطارات",
+      blur_button_text: "التمويه",
+      sharpen_button_text: "التوضيح",
+      background_button_text: "الخلفية",
+      effects_button_text: "التأثيرات",
+      undo_button_text: "تراجع",
+      redo_button_text: "إعادة",
+      save_button_text: "الحفظ",
+      share_button_text: "مشاركة",
+      settings_title: "الإعدادات",
+      language_label: "اللغة",
+      quality_label: "جودة الحفظ",
+      notifications_label: "الإشعارات",
+      font_family: "Segoe UI",
+      font_size: 16
+    };
+
+    async function onConfigChange(config) {
+      const baseFontStack = 'Tahoma, Geneva, Verdana, sans-serif';
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseSize = config.font_size || defaultConfig.font_size;
+
+      document.body.style.background = config.background_color || defaultConfig.background_color;
+      document.body.style.color = config.text_color || defaultConfig.text_color;
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+
+      const splashScreen = document.getElementById('splashScreen');
+      splashScreen.style.background = `linear-gradient(135deg, ${config.primary_action_color || defaultConfig.primary_action_color} 0%, ${config.secondary_action_color || defaultConfig.secondary_action_color} 100%)`;
+
+      const mainScreen = document.getElementById('mainScreen');
+      mainScreen.style.background = config.background_color || defaultConfig.background_color;
+
+      const header = document.querySelector('.header');
+      header.style.background = config.surface_color || defaultConfig.surface_color;
+      header.style.color = config.text_color || defaultConfig.text_color;
+
+      const settingsBtn = document.getElementById('settingsBtn');
+      settingsBtn.style.background = config.surface_color || defaultConfig.surface_color;
+      settingsBtn.style.color = config.primary_action_color || defaultConfig.primary_action_color;
+
+      const imagePreview = document.getElementById('imagePreview');
+      imagePreview.style.background = `linear-gradient(135deg, ${config.primary_action_color || defaultConfig.primary_action_color}20 0%, ${config.secondary_action_color || defaultConfig.secondary_action_color}20 100%)`;
+      imagePreview.style.color = config.text_color || defaultConfig.text_color;
+
+      const actionButtons = document.querySelectorAll('.action-btn');
+      actionButtons.forEach((btn, index) => {
+        if (index < 4) {
+          btn.style.background = config.surface_color || defaultConfig.surface_color;
+          btn.style.color = config.text_color || defaultConfig.text_color;
+        }
+      });
+
+      const saveBtn = document.getElementById('saveBtn');
+      saveBtn.style.background = `linear-gradient(135deg, ${config.primary_action_color || defaultConfig.primary_action_color} 0%, ${config.secondary_action_color || defaultConfig.secondary_action_color} 100%)`;
+      saveBtn.style.color = '#ffffff';
+
+      const shareBtn = document.getElementById('shareBtn');
+      shareBtn.style.background = `linear-gradient(135deg, ${config.secondary_action_color || defaultConfig.secondary_action_color} 0%, ${config.primary_action_color || defaultConfig.primary_action_color} 100%)`;
+      shareBtn.style.color = '#ffffff';
+
+      const settingsScreen = document.getElementById('settingsScreen');
+      settingsScreen.style.background = config.background_color || defaultConfig.background_color;
+
+      const settingsHeader = document.querySelector('.settings-header');
+      settingsHeader.style.background = config.surface_color || defaultConfig.surface_color;
+      settingsHeader.style.color = config.text_color || defaultConfig.text_color;
+
+      const backBtn = document.getElementById('backBtn');
+      backBtn.style.color = config.primary_action_color || defaultConfig.primary_action_color;
+
+      const settingItems = document.querySelectorAll('.setting-item');
+      settingItems.forEach(item => {
+        item.style.background = config.surface_color || defaultConfig.surface_color;
+        item.style.color = config.text_color || defaultConfig.text_color;
+      });
+
+      const customSelects = document.querySelectorAll('.custom-select');
+      customSelects.forEach(select => {
+        select.style.background = config.background_color || defaultConfig.background_color;
+        select.style.color = config.text_color || defaultConfig.text_color;
+      });
+
+      const toast = document.getElementById('toast');
+      toast.style.background = config.primary_action_color || defaultConfig.primary_action_color;
+      toast.style.color = '#ffffff';
+
+      document.getElementById('logoText').textContent = config.app_logo_text || defaultConfig.app_logo_text;
+      document.getElementById('logoText').style.fontSize = `${baseSize * 3}px`;
+      
+      document.getElementById('logoTagline').textContent = config.app_tagline || defaultConfig.app_tagline;
+      document.getElementById('logoTagline').style.fontSize = `${baseSize * 1.125}px`;
+      document.getElementById('logoTagline').style.color = '#ffffff';
+
+      document.getElementById('headerTitle').style.fontSize = `${baseSize * 1.5}px`;
+      
+      document.getElementById('cropBtnText').textContent = config.crop_button_text || defaultConfig.crop_button_text;
+      document.getElementById('rotateBtnText').textContent = config.rotate_button_text || defaultConfig.rotate_button_text;
+      document.getElementById('resizeBtnText').textContent = config.resize_button_text || defaultConfig.resize_button_text;
+      document.getElementById('brightnessBtnText').textContent = config.brightness_button_text || defaultConfig.brightness_button_text;
+      document.getElementById('contrastBtnText').textContent = config.contrast_button_text || defaultConfig.contrast_button_text;
+      document.getElementById('saturationBtnText').textContent = config.saturation_button_text || defaultConfig.saturation_button_text;
+      document.getElementById('filtersBtnText').textContent = config.filters_button_text || defaultConfig.filters_button_text;
+      document.getElementById('textBtnText').textContent = config.text_button_text || defaultConfig.text_button_text;
+      document.getElementById('stickersBtnText').textContent = config.stickers_button_text || defaultConfig.stickers_button_text;
+      document.getElementById('frameBtnText').textContent = config.frame_button_text || defaultConfig.frame_button_text;
+      document.getElementById('blurBtnText').textContent = config.blur_button_text || defaultConfig.blur_button_text;
+      document.getElementById('sharpenBtnText').textContent = config.sharpen_button_text || defaultConfig.sharpen_button_text;
+      document.getElementById('backgroundBtnText').textContent = config.background_button_text || defaultConfig.background_button_text;
+      document.getElementById('effectsBtnText').textContent = config.effects_button_text || defaultConfig.effects_button_text;
+      document.getElementById('undoBtnText').textContent = config.undo_button_text || defaultConfig.undo_button_text;
+      document.getElementById('redoBtnText').textContent = config.redo_button_text || defaultConfig.redo_button_text;
+      document.getElementById('saveBtnText').textContent = config.save_button_text || defaultConfig.save_button_text;
+      document.getElementById('shareBtnText').textContent = config.share_button_text || defaultConfig.share_button_text;
+
+      const actionBtnTexts = document.querySelectorAll('.action-btn span:not(.btn-icon)');
+      actionBtnTexts.forEach(text => {
+        text.style.fontSize = `${baseSize}px`;
+      });
+
+      document.getElementById('settingsTitle').textContent = config.settings_title || defaultConfig.settings_title;
+      document.getElementById('settingsTitle').style.fontSize = `${baseSize * 1.5}px`;
+      
+      document.getElementById('languageLabel').textContent = config.language_label || defaultConfig.language_label;
+      document.getElementById('qualityLabel').textContent = config.quality_label || defaultConfig.quality_label;
+      document.getElementById('notificationsLabel').textContent = config.notifications_label || defaultConfig.notifications_label;
+
+      const settingLabels = document.querySelectorAll('.setting-label');
+      settingLabels.forEach(label => {
+        label.style.fontSize = `${baseSize}px`;
+      });
+
+      const selectElements = document.querySelectorAll('.custom-select');
+      selectElements.forEach(select => {
+        select.style.fontSize = `${baseSize * 0.875}px`;
+      });
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => config.surface_color || defaultConfig.surface_color,
+            set: (value) => {
+              config.surface_color = value;
+              window.elementSdk.setConfig({ surface_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => config.primary_action_color || defaultConfig.primary_action_color,
+            set: (value) => {
+              config.primary_action_color = value;
+              window.elementSdk.setConfig({ primary_action_color: value });
+            }
+          },
+          {
+            get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+            set: (value) => {
+              config.secondary_action_color = value;
+              window.elementSdk.setConfig({ secondary_action_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => {
+            config.font_family = value;
+            window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => {
+            config.font_size = value;
+            window.elementSdk.setConfig({ font_size: value });
+          }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["app_logo_text", config.app_logo_text || defaultConfig.app_logo_text],
+        ["app_tagline", config.app_tagline || defaultConfig.app_tagline],
+        ["crop_button_text", config.crop_button_text || defaultConfig.crop_button_text],
+        ["rotate_button_text", config.rotate_button_text || defaultConfig.rotate_button_text],
+        ["resize_button_text", config.resize_button_text || defaultConfig.resize_button_text],
+        ["brightness_button_text", config.brightness_button_text || defaultConfig.brightness_button_text],
+        ["contrast_button_text", config.contrast_button_text || defaultConfig.contrast_button_text],
+        ["saturation_button_text", config.saturation_button_text || defaultConfig.saturation_button_text],
+        ["filters_button_text", config.filters_button_text || defaultConfig.filters_button_text],
+        ["text_button_text", config.text_button_text || defaultConfig.text_button_text],
+        ["stickers_button_text", config.stickers_button_text || defaultConfig.stickers_button_text],
+        ["frame_button_text", config.frame_button_text || defaultConfig.frame_button_text],
+        ["blur_button_text", config.blur_button_text || defaultConfig.blur_button_text],
+        ["sharpen_button_text", config.sharpen_button_text || defaultConfig.sharpen_button_text],
+        ["background_button_text", config.background_button_text || defaultConfig.background_button_text],
+        ["effects_button_text", config.effects_button_text || defaultConfig.effects_button_text],
+        ["undo_button_text", config.undo_button_text || defaultConfig.undo_button_text],
+        ["redo_button_text", config.redo_button_text || defaultConfig.redo_button_text],
+        ["save_button_text", config.save_button_text || defaultConfig.save_button_text],
+        ["share_button_text", config.share_button_text || defaultConfig.share_button_text],
+        ["settings_title", config.settings_title || defaultConfig.settings_title],
+        ["language_label", config.language_label || defaultConfig.language_label],
+        ["quality_label", config.quality_label || defaultConfig.quality_label],
+        ["notifications_label", config.notifications_label || defaultConfig.notifications_label]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    // التنقل بين الشاشات
+    setTimeout(() => {
+      document.getElementById('splashScreen').style.display = 'none';
+      document.getElementById('mainScreen').classList.add('active');
+    }, 2500);
+
+    document.getElementById('settingsBtn').addEventListener('click', () => {
+      document.getElementById('mainScreen').classList.remove('active');
+      document.getElementById('settingsScreen').classList.add('active');
+    });
+
+    document.getElementById('backBtn').addEventListener('click', () => {
+      document.getElementById('settingsScreen').classList.remove('active');
+      document.getElementById('mainScreen').classList.add('active');
+    });
+
+    // وظائف الأزرار
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
+    }
+
+    document.getElementById('cropBtn').addEventListener('click', () => {
+      showToast('جاري فتح أداة القص...');
+    });
+
+    document.getElementById('rotateBtn').addEventListener('click', () => {
+      showToast('جاري تدوير الصورة...');
+    });
+
+    document.getElementById('resizeBtn').addEventListener('click', () => {
+      showToast('جاري فتح أداة تغيير الحجم...');
+    });
+
+    document.getElementById('brightnessBtn').addEventListener('click', () => {
+      showToast('جاري ضبط السطوع...');
+    });
+
+    document.getElementById('contrastBtn').addEventListener('click', () => {
+      showToast('جاري ضبط التباين...');
+    });
+
+    document.getElementById('saturationBtn').addEventListener('click', () => {
+      showToast('جاري ضبط التشبع...');
+    });
+
+    document.getElementById('filtersBtn').addEventListener('click', () => {
+      showToast('جاري تحميل الفلاتر...');
+    });
+
+    document.getElementById('textBtn').addEventListener('click', () => {
+      showToast('جاري فتح أدوات النصوص...');
+    });
+
+    document.getElementById('stickersBtn').addEventListener('click', () => {
+      showToast('جاري تحميل الملصقات...');
+    });
+
+    document.getElementById('frameBtn').addEventListener('click', () => {
+      showToast('جاري تحميل الإطارات...');
+    });
+
+    document.getElementById('blurBtn').addEventListener('click', () => {
+      showToast('جاري تطبيق التمويه...');
+    });
+
+    document.getElementById('sharpenBtn').addEventListener('click', () => {
+      showToast('جاري تطبيق التوضيح...');
+    });
+
+    document.getElementById('backgroundBtn').addEventListener('click', () => {
+      showToast('جاري تغيير الخلفية...');
+    });
+
+    document.getElementById('effectsBtn').addEventListener('click', () => {
+      showToast('جاري تحميل التأثيرات...');
+    });
+
+    document.getElementById('undoBtn').addEventListener('click', () => {
+      showToast('تم التراجع عن آخر عملية');
+    });
+
+    document.getElementById('redoBtn').addEventListener('click', () => {
+      showToast('تم إعادة آخر عملية');
+    });
+
+    document.getElementById('saveBtn').addEventListener('click', () => {
+      showToast('تم حفظ الصورة بنجاح! ✓');
+    });
+
+    document.getElementById('shareBtn').addEventListener('click', () => {
+      showToast('جاري فتح خيارات المشاركة...');
+    });
+
+    // Toggle للإشعارات
+    document.getElementById('notificationsToggle').addEventListener('click', function() {
+      this.classList.toggle('active');
+      const status = this.classList.contains('active') ? 'مفعلة' : 'معطلة';
+      showToast(`الإشعارات ${status}`);
+    });
+
+    // تغيير اللغة
+    document.getElementById('languageSelect').addEventListener('change', function() {
+      showToast(`تم تغيير اللغة إلى ${this.options[this.selectedIndex].text}`);
+    });
+
+    // تغيير الجودة
+    document.getElementById('qualitySelect').addEventListener('change', function() {
+      showToast(`تم تغيير الجودة إلى ${this.options[this.selectedIndex].text}`);
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99a211ff973f6f31',t:'MTc2MjQwNTY3OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
